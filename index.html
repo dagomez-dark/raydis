@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>RAYDis</title>
+    <link rel="manifest" href="manifest.json">
+    <link rel="icon" type="image/png" href="logo.png">
+    <script src="https://cdn.sheetjs.com/xlsx-0.20.0/package/dist/xlsx.full.min.js"></script>
+    
+    <style>
+        :root { --primary: #2c3e50; --secondary: #27ae60; --danger: #e74c3c; --bg: #f4f6f7; }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Times New Roman', Times, sans; }
+body { 
+    background-image: linear-gradient(rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.5)), url('logo.png'); 
+    background-size: cover; 
+    background-position: center; 
+    background-attachment: fixed; 
+    color: #333; 
+    height: 100vh; 
+    display: flex; 
+    flex-direction: column; 
+}
+        header { background-color: var(--primary); color: white; padding: 1rem; text-align: center; display: flex; justify-content: space-between; align-items: center;}
+        
+        .pantalla { flex: 1; overflow-y: auto; padding: 1rem; display: none; }
+        .pantalla.activa { display: block; }
+        
+        .card { background: white; padding: 1.5rem; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); margin-bottom: 1rem; }
+        .btn { background-color: var(--secondary); color: white; border: none; padding: 0.8rem; border-radius: 6px; width: 100%; font-size: 1rem; margin-top: 0.5rem; cursor: pointer; font-weight: bold; }
+        .btn-danger { background-color: var(--danger); }
+        .btn-outline { background-color: transparent; border: 2px solid var(--primary); color: var(--primary); }
+        input, select, textarea { width: 100%; padding: 0.8rem; margin-top: 0.5rem; border: 1px solid #ccc; border-radius: 6px; font-size: 1rem; }
+        .hidden { display: none !important; }
+        
+        nav { background-color: white; display: none; border-top: 1px solid #ddd; padding: 0.5rem 0; }
+        nav.activo { display: flex; }
+        .nav-item { flex: 1; text-align: center; padding: 0.5rem; color: #666; text-decoration: none; font-size: 0.9rem; cursor: pointer; }
+        .nav-item.activo { color: var(--primary); font-weight: bold; border-bottom: 3px solid var(--primary); }
+    </style>
+</head>
+<body>
+
+    <header id="mainHeader" style="display: none;">
+        <div style="display: flex; align-items: center; gap: 10px;">
+            <img src="logo.png" alt="Escudo" style="height: 30px;">
+        <h3 style="font-family: 'Times New Roman', Times, sans;">RAYDis (v1.0) <span style="font-size: 0.7em;">By Diego G. & Gemini</span></h3>
+        <button onclick="cerrarSesion()" style="background:none; border:none; color:white; font-size:1.5rem; cursor:pointer;" title="Cerrar Sesión">🔒</button>
+    </header>
+
+    <div id="pantallaLogin" class="pantalla activa" style="display: flex; flex-direction: column; justify-content: center; max-width: 400px; margin: auto;">
+        <div class="card" style="text-align: center;">
+            <h2>I.E.D. Nacionalizado - Jerusalén</h2>
+            <h2>Hola Profe! Ingresa el PIN</h2>
+            <p style="color: #666; font-size: 0.9rem; margin-bottom: 1rem;">Protege tu información local</p>
+            <input type="password" id="pinInput" placeholder="PIN de 4 dígitos" inputmode="numeric" maxlength="4" style="text-align: center; font-size: 1.5rem; letter-spacing: 0.5rem;">
+            <button class="btn" onclick="validarPIN()">Entrar</button>
+            <p id="msgLogin" style="color: var(--danger); font-size: 0.8rem; margin-top: 1rem; display: none;"></p>
+            <button onclick="recuperarPIN()" style="background:none; border:none; color:var(--primary); text-decoration:underline; margin-top:1.5rem; cursor:pointer; font-size:0.85rem;">¿Olvidaste tu PIN?</button>
+        </div>
+    </div>
+
+    <div id="pantallaInicio" class="pantalla">
+        <div class="card">
+            <h3>Generar Reporte</h3>
+            <label>Materia:</label>
+            <div style="display: flex; gap: 0.5rem; align-items: center;">
+                <select id="selectMateria" style="flex: 1;"><option value="">Selecciona...</option></select>
+                <button class="btn btn-outline" style="width: auto; margin: 0; padding: 0.6rem 1rem;" onclick="agregarMateriaLocal()" title="Añadir materia">➕</button>
+                <button class="btn btn-outline" style="width: auto; margin: 0; padding: 0.6rem 1rem;" onclick="abrirModalMaterias()" title="Gestionar materias">✏️</button>
+            </div>
+            <hr style="margin: 1.5rem 0; border: 0; border-top: 1px solid #eee;">
+            <label><strong>1. Buscar por Nombre/Doc:</strong></label>
+            <input type="text" id="buscador" placeholder="Escribe..." autocomplete="off" onkeyup="buscarEstudianteUI()">
+            <div id="resultadosBusqueda"></div>
+            <label style="margin-top: 1rem; display: block;"><strong>2. O Buscar por Grado:</strong></label>
+            <select id="selectGradoInicio" onchange="cargarEstudiantesGradoInicio()"><option value="">-- Elige Grado --</option></select>
+            <select id="selectListaEstudiantesInicio" class="hidden" onchange="seleccionarDesdeLista()"></select>
+
+            <div id="zonaReporte" class="hidden" style="margin-top: 1.5rem; border-top: 2px solid var(--primary); padding-top: 1rem;">
+                <h4 id="nombreEstudianteSeleccionado" style="color: var(--primary);"></h4>
+                <input type="hidden" id="idEstudianteSeleccionado">
+
+                <div style="display: flex; gap: 0.5rem;">
+                    <button class="btn" style="background-color: #3498db;" onclick="mostrarFormulario('Academico')">📝 Académico</button>
+                    <button class="btn" style="background-color: #e74c3c;" onclick="mostrarFormulario('Disciplinario')">⚠️ Disciplinario</button>
+                </div>
+
+                <div id="infoAcudiente" style="background: #e8f8f5; padding: 10px; border-radius: 6px; margin-top: 0.5rem; margin-bottom: 1rem; font-size: 0.9rem; border: 1px solid #a3e4d7; display: none;">
+                    <strong>Acudiente:</strong> <span id="lblAcudiente"></span><br>
+                    <strong>Teléfono:</strong> <span id="lblTelAcudiente"></span>
+                    <button id="btnWhatsApp" class="btn" style="background-color: #25D366; color: white; margin-top: 0.5rem; padding: 0.5rem; display: none;">📲 Contactar por WhatsApp</button>
+                </div>
+                
+                <h4 style="margin-top: 1.5rem; border-top: 1px solid #ccc; padding-top: 1rem;">Historial de Reportes del Estudiante</h4>
+                <div id="listaHistorialEstudiante" style="margin-top: 0.5rem; max-height: 200px; overflow-y: auto;"></div>
+                
+                <div style="background: #fdf2e9; padding: 1rem; border-radius: 6px; margin-top: 1rem;">
+                    <h5 style="color: #d35400; margin-bottom: 0.5rem;">Eliminar historial de este estudiante por rango</h5>
+                    <div style="display: flex; gap: 0.5rem;">
+                        <input type="date" id="fechaIniBorrado">
+                        <input type="date" id="fechaFinBorrado">
+                    </div>
+                    <button class="btn btn-danger" onclick="borrarReportesRango()">Borrar en este rango</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="pantallaEstudiantes" class="pantalla">
+        <div class="card">
+            <h3>Gestión de Estudiantes</h3>
+            <button class="btn btn-outline" onclick="abrirModalNuevoEstudiante()">+ Añadir Estudiante Manualmente</button>
+        </div>
+        <div class="card">
+            <label>Filtrar lista por grado:</label>
+            <select id="filtroGradoCrud" onchange="cargarEstudiantesCrud()"><option value="">Todos los grados</option></select>
+            <div id="listaEstudiantesCrud" style="margin-top: 1rem;"></div>
+        </div>
+    </div>
+
+    <div id="pantallaConfig" class="pantalla">
+        
+        <div class="card">
+            <h3>Base de Datos (Excel)</h3>
+            <input type="file" id="archivoExcel" accept=".xlsx, .xls">
+            <button class="btn" onclick="procesarExcel()">Importar Estudiantes</button>
+        </div>
+        
+        <div class="card">
+            <h3>Exportar Reportes a Excel</h3>
+            <label>Filtro de Exportación:</label>
+            <select id="tipoExportacion" onchange="toggleFiltrosExport()">
+                <option value="todos">Todos los reportes</option>
+                <option value="grado">Por Grado Específico</option>
+                <option value="estudiante">Por Estudiante Específico</option>
+            </select>
+            <select id="exportGrado" class="hidden" onchange="cargarEstudiantesExport()"><option value="">-- Elige Grado --</option></select>
+            <select id="exportEstudiante" class="hidden"><option value="">-- Elige Estudiante --</option></select>
+            <button class="btn" style="background-color: #2980b9; margin-top: 1rem;" onclick="exportarReportes()">📥 Descargar Excel</button>
+            
+            <hr style="margin: 1.5rem 0; border: 0; border-top: 1px dashed #ccc;">
+            
+            <h4 style="color: var(--danger); margin-bottom: 0.5rem;">Borrar Reportes Globales (Todo el colegio)</h4>
+            <div style="display: flex; gap: 0.5rem; margin-bottom: 0.5rem;">
+                <input type="date" id="fechaIniGlobal">
+                <input type="date" id="fechaFinGlobal">
+            </div>
+            <button class="btn btn-danger" onclick="borrarReportesGlobalesRango()">🗑️ Borrar Reportes en este Rango</button>
+        </div>
+        <div class="card">
+            <h3>Seguridad y PIN</h3>
+            <div style="display: flex; gap: 0.5rem;">
+                <div style="width: 50%;">
+                    <label style="font-size:0.85rem;">Cambiar PIN:</label>
+                    <input type="password" id="nuevoPin" maxlength="4" inputmode="numeric" placeholder="Nuevo PIN de 4 dígitos">
+                </div>
+                <div style="width: 50%;">
+                    <label style="font-size:0.85rem;">Palabra secreta (Recuperación):</label>
+                    <input type="text" id="palabraRecuperacion" placeholder="Ej: Mi mascota">
+                </div>
+            </div>
+            <button class="btn" style="background-color: var(--primary);" onclick="actualizarSeguridad()">Guardar Seguridad</button>
+        </div>
+    </div>
+
+    <nav id="menuNavegacion">
+        <div class="nav-item activo" onclick="navegar('Inicio', this)">📝 Inicio</div>
+        <div class="nav-item" onclick="navegar('Estudiantes', this)">👥 Alumnos</div>
+        <div class="nav-item" onclick="navegar('Config', this)">📊 Reportes</div>
+    </nav>
+
+    <div id="modalReporte" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 1000; justify-content: center; align-items: center; padding: 1rem;">
+        <div class="card" style="width: 100%; max-width: 500px; max-height: 90vh; overflow-y: auto; position: relative;">
+            <button onclick="cerrarModal()" style="position: absolute; top: 10px; right: 15px; background: none; border: none; font-size: 1.5rem; cursor: pointer; color: #666;">✖</button>
+            <h3 id="tituloModalReporte" style="margin-bottom: 1rem; color: var(--primary);">Nuevo Reporte</h3>
+            <input type="hidden" id="tipoReporteActual">
+            <label>Fecha:</label>
+            <input type="date" id="fechaReporte" required>
+
+            <div id="formAcademico" class="hidden">
+                <h4 style="margin-top: 1rem;">Frases Precargadas</h4>
+                <div id="frasesAcademicoContainer" style="display: flex; flex-direction: column; gap: 0.5rem; margin-top: 0.5rem;">
+                    <label><input type="checkbox" name="chk_academico" value="Trabajó muy bien"> Trabajó muy bien</label>
+                    <label><input type="checkbox" name="chk_academico" value="No trabajó en clase"> No trabajó en clase</label>
+                </div>
+                <button class="btn btn-outline" style="padding: 0.4rem; margin-top: 0.5rem; font-size: 0.8rem;" onclick="agregarOpcionLocal('frasesAcademicoContainer', 'chk_academico', 'frases_acad')">+ Añadir nueva frase</button>
+                <h4 style="margin-top: 1rem;">Observación Escrita</h4>
+                <textarea id="obsAcademica" rows="3" placeholder="Detalles..."></textarea>
+            </div>
+
+            <div id="formDisciplinario" class="hidden">
+                <h4 style="margin-top: 1rem;">1. Frases Precargadas</h4>
+                <div id="frasesDisciplinaContainer" style="display: flex; flex-direction: column; gap: 0.5rem; margin-top: 0.5rem;">
+                    <label><input type="checkbox" name="chk_disciplina" value="Llegó tarde a clase"> Llegó tarde a clase</label>
+                </div>
+                <button class="btn btn-outline" style="padding: 0.4rem; margin-top: 0.5rem; font-size: 0.8rem;" onclick="agregarOpcionLocal('frasesDisciplinaContainer', 'chk_disciplina', 'frases_disc')">+ Añadir nueva frase</button>
+                <h4 style="margin-top: 1rem;">2. Lista de Chequeo</h4>
+                <div id="chequeoDisciplinaContainer" style="display: flex; flex-direction: column; gap: 0.5rem; margin-top: 0.5rem;">
+                    <label><input type="checkbox" name="chk_chequeo" value="Uniforme incompleto"> Uniforme incompleto</label>
+                </div>
+                <button class="btn btn-outline" style="padding: 0.4rem; margin-top: 0.5rem; font-size: 0.8rem;" onclick="agregarOpcionLocal('chequeoDisciplinaContainer', 'chk_chequeo', 'chequeo_disc')">+ Añadir nuevo ítem</button>
+                <h4 style="margin-top: 1rem;">3. Observación Escrita</h4>
+                <textarea id="obsDisciplina" rows="3" placeholder="Hechos..."></textarea>
+            </div>
+            <button class="btn" style="margin-top: 1.5rem;" onclick="guardarReporte()">💾 Guardar Reporte</button>
+        </div>
+    </div>
+
+    <div id="modalEstudiante" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 1000; justify-content: center; align-items: center; padding: 1rem;">
+        <div class="card" style="width: 100%; max-width: 400px; position: relative;">
+            <button onclick="cerrarModalEstudiante()" style="position: absolute; top: 10px; right: 15px; background: none; border: none; font-size: 1.5rem; cursor: pointer; color: #666;">✖</button>
+            <h3 id="tituloModalEstudiante" style="margin-bottom: 1rem; color: var(--primary);">Nuevo Estudiante</h3>
+            <input type="hidden" id="crudId">
+            <input type="text" id="crudNombre" placeholder="Nombre completo *" required>
+            <input type="text" id="crudDocumento" placeholder="Documento de identidad">
+            <input type="text" id="crudGrado" placeholder="Grado (Ej: 10A, 11B) *" required>
+            <div style="display: flex; gap: 0.5rem;">
+                <input type="number" id="crudEdad" placeholder="Edad" style="width: 30%;">
+                <input type="text" id="crudTelefono" placeholder="Teléfono estudiante" style="width: 70%;">
+            </div>
+            <input type="text" id="crudAcudiente" placeholder="Nombre del Acudiente">
+            <input type="text" id="crudTelAcudiente" placeholder="Teléfono del Acudiente">
+            <p style="font-size: 0.8rem; color: #666; margin-top: 1rem;">Los campos con (*) son obligatorios.</p>
+            <button class="btn" style="margin-top: 1rem;" onclick="guardarEstudiante()">💾 Guardar Información</button>
+        </div>
+    </div>
+
+<div id="modalMaterias" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 1000; justify-content: center; align-items: center; padding: 1rem;">
+        <div class="card" style="width: 100%; max-width: 400px; max-height: 80vh; overflow-y: auto; position: relative;">
+            <button onclick="cerrarModalMaterias()" style="position: absolute; top: 10px; right: 15px; background: none; border: none; font-size: 1.5rem; cursor: pointer; color: #666;">✖</button>
+            <h3 style="margin-bottom: 1rem; color: var(--primary);">Gestionar Materias</h3>
+            <p style="font-size: 0.8rem; color: #666; margin-bottom: 1rem;">Si editas un nombre, se actualizará en los reportes previos automáticamente.</p>
+            <div id="listaMateriasModal" style="display: flex; flex-direction: column; gap: 0.5rem;">
+                </div>
+        </div>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>

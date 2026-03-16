@@ -1,0 +1,16 @@
+{
+  "name": "Gestor de Reportes Docentes",
+  "short_name": "ReportesApp",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#f4f6f7",
+  "theme_color": "#2c3e50",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "https://cdn-icons-png.flaticon.com/512/3135/3135679.png", 
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
