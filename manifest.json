@@ -1,6 +1,6 @@
 {
   "name": "Gestor de Reportes Docentes",
-  "short_name": "ReportesApp",
+  "short_name": "RAYDisApp",
   "start_url": "./index.html",
   "display": "standalone",
   "background_color": "#f4f6f7",
