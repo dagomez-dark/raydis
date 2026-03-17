@@ -491,13 +491,63 @@ function agregarOpcionLocal(contId, name, key) {
     }
 }
 
+
 function cargarOpcionesGuardadas() {
-    const c = (k, id, nm) => {
-        let g = JSON.parse(localStorage.getItem(k)) || [];
-        const ex = Array.from(document.getElementById(id).querySelectorAll('input')).map(i => i.value);
-        g.forEach(f => { if(!ex.includes(f)) { const l = document.createElement('label'); l.innerHTML = `<input type="checkbox" name="${nm}" value="${f}"> ${f}`; document.getElementById(id).appendChild(l); } });
+    const cargar = (storageKey, containerId, inputName) => {
+        let guardadas = JSON.parse(localStorage.getItem(storageKey)) || [];
+        const container = document.getElementById(containerId);
+        
+        // Revisamos cuáles frases ya están en pantalla para no dibujarlas dos veces
+        const existentes = Array.from(container.querySelectorAll('input')).map(i => i.value);
+        
+        guardadas.forEach(frase => {
+            if (!existentes.includes(frase)) {
+                
+                // 1. Creamos la caja (div) que contendrá la frase y la X
+                const contenedorFrase = document.createElement('div');
+                contenedorFrase.style.display = "flex";
+                contenedorFrase.style.justifyContent = "space-between"; // Separa el texto a la izquierda y la X a la derecha
+                contenedorFrase.style.alignItems = "center";
+                contenedorFrase.style.marginBottom = "5px"; // Da un respiro visual
+                
+                // 2. Le inyectamos la etiqueta y el botón rojo
+                contenedorFrase.innerHTML = `
+                    <label style="flex: 1; cursor: pointer;">
+                        <input type="checkbox" name="${inputName}" value="${frase}"> ${frase}
+                    </label>
+                    <button type="button" onclick="eliminarOpcionLocal('${storageKey}', '${frase}', this.parentElement)" style="background: none; border: none; color: #e74c3c; font-size: 1.2rem; cursor: pointer; padding: 0 5px;" title="Borrar frase">✖</button>
+                `;
+                
+                // 3. Lo agregamos al contenedor principal de la pantalla
+                container.appendChild(contenedorFrase);
+            }
+        });
     };
-    c('frases_acad', 'frasesAcademicoContainer', 'chk_academico'); c('frases_disc', 'frasesDisciplinaContainer', 'chk_disciplina'); c('chequeo_disc', 'chequeoDisciplinaContainer', 'chk_chequeo');
+
+    // Llamamos a la función constructora para cada una de las 3 zonas de la app
+    cargar('frases_acad', 'frasesAcademicoContainer', 'chk_academico');
+    cargar('frases_disc', 'frasesDisciplinaContainer', 'chk_disciplina');
+    cargar('chequeo_disc', 'chequeoDisciplinaContainer', 'chk_chequeo');
+}
+
+// ==============================================================
+// FUNCIÓN ELIMINACION DE FRASES
+// ==============================================================
+function eliminarOpcionLocal(storageKey, frase, elementoHTML) {
+    // 1. Preguntamos por seguridad
+    if (!confirm(`¿Borrar la frase "${frase}" de tus opciones predeterminadas?`)) return;
+
+    // 2. Traemos la lista de la memoria
+    let guardadas = JSON.parse(localStorage.getItem(storageKey)) || [];
+    
+    // 3. Filtramos la lista (dejamos todas MENOS la que queremos borrar)
+    guardadas = guardadas.filter(item => item !== frase);
+    
+    // 4. Guardamos la nueva lista limpia en la memoria
+    localStorage.setItem(storageKey, JSON.stringify(guardadas));
+    
+    // 5. Borramos la frase de la pantalla visualmente al instante
+    elementoHTML.remove(); 
 }
 
 // ==========================================
@@ -652,3 +702,57 @@ function eliminarEstudiante(id) {
     if (!confirm("⚠️ ¿Estás seguro de eliminar a este estudiante? Sus reportes se conservarán globalmente.")) return;
     db.transaction(['estudiantes'], 'readwrite').objectStore('estudiantes').delete(id).onsuccess = () => { alert("🗑️ Eliminado."); actualizarListasDeGrados(); cargarEstudiantesCrud(); };
 }
+
+////////////
+function eliminarEstudiantesPorGrado() {
+    const grado = document.getElementById('filtroGradoCrud').value;
+    if (!grado) return alert("Primero selecciona un grado en el filtro superior.");
+    if (!confirm(`¿Estás seguro de eliminar a TODOS los estudiantes del grado ${grado}? Sus reportes históricos se conservarán.`)) return;
+
+    const transaccion = db.transaction(['estudiantes'], 'readwrite');
+    const store = transaccion.objectStore('estudiantes');
+    const index = store.index('grado'); // Buscamos por la columna grado
+    
+    // El cursor es un iterador. Le pasamos el grado exacto que queremos buscar
+    const request = index.openCursor(IDBKeyRange.only(grado));
+
+    request.onsuccess = function(event) {
+        const cursor = event.target.result;
+        if (cursor) {
+            cursor.delete(); // Borra el registro donde está parado el cursor
+            cursor.continue(); // Salta al siguiente estudiante de ese grado
+        } else {
+            // Cuando ya no hay más resultados (cursor es null)
+            alert(`Estudiantes del grado ${grado} eliminados.`);
+            document.getElementById('filtroGradoCrud').value = ""; // Limpiamos el filtro
+            actualizarListasDeGrados();
+            cargarEstudiantesCrud();
+        }
+    };
+}
+
+function eliminarTodosEstudiantes() {
+    // 1. Preguntamos por seguridad antes de hacer cualquier cosa
+    if (!confirm("⚠️ PELIGRO: ¿Estás absolutamente seguro de querer borrar TODOS los estudiantes del colegio? \n\nEsto no borrará los reportes históricos, pero vaciará la lista actual de alumnos.")) return;
+
+    // 2. Tu línea de código corregida y separada paso a paso para mayor claridad
+    const transaccion = db.transaction(['estudiantes'], 'readwrite');
+    const store = transaccion.objectStore('estudiantes');
+    const peticion = store.clear(); // Aquí ejecutamos el borrado total
+
+    // 3. ¿Qué pasa cuando la base de datos termina de borrar todo?
+    peticion.onsuccess = function() {
+        alert("✅ Todos los estudiantes han sido eliminados del sistema.");
+        
+        // 4. Actualizamos la pantalla para que refleje que la lista está vacía
+        document.getElementById('filtroGradoCrud').value = ""; // Limpiamos el filtro
+        actualizarListasDeGrados(); // Actualiza los desplegables
+        cargarEstudiantesCrud();    // Vuelve a dibujar la lista en pantalla (ahora vacía)
+    };
+
+    // 5. Por si algo falla (memoria llena, etc.)
+    peticion.onerror = function() {
+        alert("❌ Hubo un error al intentar vaciar la lista.");
+    };
+}
+
