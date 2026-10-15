@@ -20,98 +20,446 @@
 // =========================================================================
 // RÚBRICAS PREDISEÑADAS (SE CARGAN AUTOMÁTICAMENTE DESDE LA DESCARGA)
 // =========================================================================
-// Puedes reemplazar este arreglo usando el botón "💻 Copiar Código para app.js"
-// que se encuentra en la pestaña Datos -> Gestión de Rúbricas.
 const RUBRICAS_PREDISEÑADAS = [
     {
-        nombre: "Exposición y Sustentación Oral (Prediseñada)",
-        es_predisenada: true,
-        fecha_creacion: "2026-03-01",
-        criterios: [
+        "nombre": "Rubrica_Laboratorio",
+        "es_predisenada": true,
+        "fecha_creacion": "2026-10-15",
+        "criterios": [
             {
-                criterio: "1. Dominio del tema y rigor conceptual",
-                peso: 40,
-                niveles: [
-                    { nivel: "No presenta", desc: "No realiza la sustentación o no asiste a la actividad.", val: 1.0 },
-                    { nivel: "Bajo", desc: "Lee textualmente sin explicar y presenta errores conceptuales.", val: 2.2 },
-                    { nivel: "Básico", desc: "Explica las ideas básicas pero duda al responder preguntas.", val: 3.3 },
-                    { nivel: "Alto", desc: "Explica con claridad, precisión técnica y responde bien las preguntas.", val: 4.3 },
-                    { nivel: "Superior", desc: "Domina el tema con profundidad, argumenta con fluidez y conecta conceptos.", val: 5.0 }
+                "criterio": "1. Dominio conceptual y rigor científico",
+                "peso": 50,
+                "niveles": [
+                    {
+                        "nivel": "No presenta",
+                        "desc": "No entrega ni evidencia conceptos",
+                        "val": 1
+                    },
+                    {
+                        "nivel": "Bajo",
+                        "desc": "Presenta confusiones conceptuales graves",
+                        "val": 2
+                    },
+                    {
+                        "nivel": "Básico",
+                        "desc": "Comprende y explica los conceptos básicos",
+                        "val": 3.3
+                    },
+                    {
+                        "nivel": "Alto",
+                        "desc": "Aplica los conceptos con precisión técnica",
+                        "val": 4.2
+                    },
+                    {
+                        "nivel": "Superior",
+                        "desc": "Domina y relaciona los conceptos de forma sobresaliente",
+                        "val": 5
+                    }
                 ]
             },
             {
-                criterio: "2. Expresión oral, postura y manejo del tiempo",
-                peso: 30,
-                niveles: [
-                    { nivel: "No presenta", desc: "No participa en la exposición.", val: 1.0 },
-                    { nivel: "Bajo", desc: "Tono de voz muy bajo, poca claridad y no respeta el tiempo asignado.", val: 2.2 },
-                    { nivel: "Básico", desc: "Se hace entender, aunque usa muletillas o se extiende del tiempo.", val: 3.3 },
-                    { nivel: "Alto", desc: "Buen tono de voz, contacto visual y uso adecuado del tiempo.", val: 4.3 },
-                    { nivel: "Superior", desc: "Comunicación cautivadora, excelente dicción y ajuste exacto al tiempo.", val: 5.0 }
-                ]
-            },
-            {
-                criterio: "3. Calidad del material de apoyo y trabajo en equipo",
-                peso: 30,
-                niveles: [
-                    { nivel: "No presenta", desc: "No presenta material de apoyo.", val: 1.0 },
-                    { nivel: "Bajo", desc: "Material saturado de texto, desordenado o sin coordinación grupal.", val: 2.2 },
-                    { nivel: "Básico", desc: "Material comprensible pero con poco apoyo visual.", val: 3.3 },
-                    { nivel: "Alto", desc: "Material visualmente claro, organizado y articulado entre los integrantes.", val: 4.3 },
-                    { nivel: "Superior", desc: "Material creativo, sintético, de alto impacto pedagógico y excelente coordinación.", val: 5.0 }
+                "criterio": "2. Análisis experimental y conclusiones",
+                "peso": 50,
+                "niveles": [
+                    {
+                        "nivel": "No presenta",
+                        "desc": "No presenta análisis de datos",
+                        "val": 1
+                    },
+                    {
+                        "nivel": "Bajo",
+                        "desc": "Registra datos incompletos sin análisis",
+                        "val": 2.2
+                    },
+                    {
+                        "nivel": "Básico",
+                        "desc": "Analiza los resultados de forma descriptiva",
+                        "val": 3.5
+                    },
+                    {
+                        "nivel": "Alto",
+                        "desc": "Contrasta hipótesis y redacta conclusiones claras",
+                        "val": 4.4
+                    },
+                    {
+                        "nivel": "Superior",
+                        "desc": "Formula conclusiones críticas basadas en evidencia",
+                        "val": 5
+                    }
                 ]
             }
         ]
     },
     {
-        nombre: "Informe de Laboratorio / Proyecto (Prediseñada)",
-        es_predisenada: true,
-        fecha_creacion: "2026-03-01",
-        criterios: [
+        "nombre": "Exposición y Sustentación Oral (Prediseñada)",
+        "es_predisenada": true,
+        "fecha_creacion": "2026-03-01",
+        "criterios": [
             {
-                criterio: "1. Planteamiento, objetivos y marco conceptual",
-                peso: 30,
-                niveles: [
-                    { nivel: "No presenta", desc: "No entrega el informe o proyecto.", val: 1.0 },
-                    { nivel: "Bajo", desc: "Objetivos confusos y sin sustento teórico.", val: 2.2 },
-                    { nivel: "Básico", desc: "Presenta objetivos e introducción básica con poca articulación.", val: 3.3 },
-                    { nivel: "Alto", desc: "Objetivos claros y marco conceptual bien estructurado y pertinente.", val: 4.3 },
-                    { nivel: "Superior", desc: "Fundamentación científica rigurosa y objetivos perfectamente articulados.", val: 5.0 }
+                "criterio": "1. Dominio del tema y rigor conceptual",
+                "peso": 40,
+                "niveles": [
+                    {
+                        "nivel": "No presenta",
+                        "desc": "No realiza la sustentación o no asiste a la actividad.",
+                        "val": 1
+                    },
+                    {
+                        "nivel": "Bajo",
+                        "desc": "Lee textualmente sin explicar y presenta errores conceptuales.",
+                        "val": 2.2
+                    },
+                    {
+                        "nivel": "Básico",
+                        "desc": "Explica las ideas básicas pero duda al responder preguntas.",
+                        "val": 3.3
+                    },
+                    {
+                        "nivel": "Alto",
+                        "desc": "Explica con claridad, precisión técnica y responde bien las preguntas.",
+                        "val": 4.3
+                    },
+                    {
+                        "nivel": "Superior",
+                        "desc": "Domina el tema con profundidad, argumenta con fluidez y conecta conceptos.",
+                        "val": 5
+                    }
                 ]
             },
             {
-                criterio: "2. Metodología, registro de datos y evidencias",
-                peso: 35,
-                niveles: [
-                    { nivel: "No presenta", desc: "No registra datos ni procedimiento.", val: 1.0 },
-                    { nivel: "Bajo", desc: "Datos incompletos, desordenados o sin unidades de medida.", val: 2.2 },
-                    { nivel: "Básico", desc: "Registra los datos principales aunque con fallas de organización.", val: 3.3 },
-                    { nivel: "Alto", desc: "Procedimiento claro y datos bien organizados en tablas o gráficas.", val: 4.3 },
-                    { nivel: "Superior", desc: "Registro sistemático, riguroso y con excelente representación gráfica.", val: 5.0 }
+                "criterio": "2. Expresión oral, postura y manejo del tiempo",
+                "peso": 30,
+                "niveles": [
+                    {
+                        "nivel": "No presenta",
+                        "desc": "No participa en la exposición.",
+                        "val": 1
+                    },
+                    {
+                        "nivel": "Bajo",
+                        "desc": "Tono de voz muy bajo, poca claridad y no respeta el tiempo asignado.",
+                        "val": 2.2
+                    },
+                    {
+                        "nivel": "Básico",
+                        "desc": "Se hace entender, aunque usa muletillas o se extiende del tiempo.",
+                        "val": 3.3
+                    },
+                    {
+                        "nivel": "Alto",
+                        "desc": "Buen tono de voz, contacto visual y uso adecuado del tiempo.",
+                        "val": 4.3
+                    },
+                    {
+                        "nivel": "Superior",
+                        "desc": "Comunicación cautivadora, excelente dicción y ajuste exacto al tiempo.",
+                        "val": 5
+                    }
                 ]
             },
             {
-                criterio: "3. Análisis de resultados y conclusiones",
-                peso: 35,
-                niveles: [
-                    { nivel: "No presenta", desc: "No incluye análisis ni conclusiones.", val: 1.0 },
-                    { nivel: "Bajo", desc: "Repite los datos sin analizarlos ni responder a los objetivos.", val: 2.2 },
-                    { nivel: "Básico", desc: "Realiza una descripción superficial de los resultados obtenidos.", val: 3.3 },
-                    { nivel: "Alto", desc: "Interpreta los resultados con base teórica y redacta conclusiones claras.", val: 4.3 },
-                    { nivel: "Superior", desc: "Análisis crítico profundo, contrasta hipótesis y propone mejoras pertinentes.", val: 5.0 }
+                "criterio": "3. Calidad del material de apoyo y trabajo en equipo",
+                "peso": 30,
+                "niveles": [
+                    {
+                        "nivel": "No presenta",
+                        "desc": "No presenta material de apoyo.",
+                        "val": 1
+                    },
+                    {
+                        "nivel": "Bajo",
+                        "desc": "Material saturado de texto, desordenado o sin coordinación grupal.",
+                        "val": 2.2
+                    },
+                    {
+                        "nivel": "Básico",
+                        "desc": "Material comprensible pero con poco apoyo visual.",
+                        "val": 3.3
+                    },
+                    {
+                        "nivel": "Alto",
+                        "desc": "Material visualmente claro, organizado y articulado entre los integrantes.",
+                        "val": 4.3
+                    },
+                    {
+                        "nivel": "Superior",
+                        "desc": "Material creativo, sintético, de alto impacto pedagógico y excelente coordinación.",
+                        "val": 5
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "nombre": "Informe de Laboratorio / Proyecto (Prediseñada)",
+        "es_predisenada": true,
+        "fecha_creacion": "2026-03-01",
+        "criterios": [
+            {
+                "criterio": "1. Planteamiento, objetivos y marco conceptual",
+                "peso": 30,
+                "niveles": [
+                    {
+                        "nivel": "No presenta",
+                        "desc": "No entrega el informe o proyecto.",
+                        "val": 1
+                    },
+                    {
+                        "nivel": "Bajo",
+                        "desc": "Objetivos confusos y sin sustento teórico.",
+                        "val": 2.2
+                    },
+                    {
+                        "nivel": "Básico",
+                        "desc": "Presenta objetivos e introducción básica con poca articulación.",
+                        "val": 3.3
+                    },
+                    {
+                        "nivel": "Alto",
+                        "desc": "Objetivos claros y marco conceptual bien estructurado y pertinente.",
+                        "val": 4.3
+                    },
+                    {
+                        "nivel": "Superior",
+                        "desc": "Fundamentación científica rigurosa y objetivos perfectamente articulados.",
+                        "val": 5
+                    }
+                ]
+            },
+            {
+                "criterio": "2. Metodología, registro de datos y evidencias",
+                "peso": 35,
+                "niveles": [
+                    {
+                        "nivel": "No presenta",
+                        "desc": "No registra datos ni procedimiento.",
+                        "val": 1
+                    },
+                    {
+                        "nivel": "Bajo",
+                        "desc": "Datos incompletos, desordenados o sin unidades de medida.",
+                        "val": 2.2
+                    },
+                    {
+                        "nivel": "Básico",
+                        "desc": "Registra los datos principales aunque con fallas de organización.",
+                        "val": 3.3
+                    },
+                    {
+                        "nivel": "Alto",
+                        "desc": "Procedimiento claro y datos bien organizados en tablas o gráficas.",
+                        "val": 4.3
+                    },
+                    {
+                        "nivel": "Superior",
+                        "desc": "Registro sistemático, riguroso y con excelente representación gráfica.",
+                        "val": 5
+                    }
+                ]
+            },
+            {
+                "criterio": "3. Análisis de resultados y conclusiones",
+                "peso": 35,
+                "niveles": [
+                    {
+                        "nivel": "No presenta",
+                        "desc": "No incluye análisis ni conclusiones.",
+                        "val": 1
+                    },
+                    {
+                        "nivel": "Bajo",
+                        "desc": "Repite los datos sin analizarlos ni responder a los objetivos.",
+                        "val": 2.2
+                    },
+                    {
+                        "nivel": "Básico",
+                        "desc": "Realiza una descripción superficial de los resultados obtenidos.",
+                        "val": 3.3
+                    },
+                    {
+                        "nivel": "Alto",
+                        "desc": "Interpreta los resultados con base teórica y redacta conclusiones claras.",
+                        "val": 4.3
+                    },
+                    {
+                        "nivel": "Superior",
+                        "desc": "Análisis crítico profundo, contrasta hipótesis y propone mejoras pertinentes.",
+                        "val": 5
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "nombre": "Rubrica_ProyectoCiencias",
+        "es_predisenada": true,
+        "fecha_creacion": "2026-10-15",
+        "criterios": [
+            {
+                "criterio": "1. Comunicación y Lenguaje Científico",
+                "peso": 15,
+                "niveles": [
+                    {
+                        "nivel": "No presenta",
+                        "desc": "No participa ni aporta a la explicación",
+                        "val": 1
+                    },
+                    {
+                        "nivel": "Bajo",
+                        "desc": "Sin contacto visual o voz inaudible. Lenguaje no técnico. Lee mecánicamente o repite discursos sin comprensión.",
+                        "val": 1.8
+                    },
+                    {
+                        "nivel": "Básico",
+                        "desc": "Contacto visual intermitente. Lenguaje coloquial con fallos técnicos. Depende significativamente de la lectura de fichas, hojas o de la cartelera.",
+                        "val": 3.3
+                    },
+                    {
+                        "nivel": "Alto",
+                        "desc": "Buen contacto visual y uso de lenguaje técnico. Explicación fluida con pausas o consultas ocasionales a sus notas o cartelera.",
+                        "val": 4
+                    },
+                    {
+                        "nivel": "Superior",
+                        "desc": "Contacto visual constante, fluidez y vocabulario técnico preciso. Discurso natural, seguro y sin lectura de apoyos.",
+                        "val": 5
+                    }
+                ]
+            },
+            {
+                "criterio": "2. Apropiación Conceptual y Metodología",
+                "peso": 25,
+                "niveles": [
+                    {
+                        "nivel": "No presenta",
+                        "desc": "No conoce los fundamentos científicos o técnicos asociados al proyecto",
+                        "val": 1
+                    },
+                    {
+                        "nivel": "Bajo",
+                        "desc": "No explica propósito ni desarrollo. Errores conceptuales graves o desconocimiento total de los principios científicos.",
+                        "val": 1.8
+                    },
+                    {
+                        "nivel": "Básico",
+                        "desc": "Explicación vaga o desordenada. Menciona conceptos científicos con confusiones, errores o superficialidad investigativa.",
+                        "val": 3.3
+                    },
+                    {
+                        "nivel": "Alto",
+                        "desc": "Explica propósito y método general. Comprende conceptos base, pero omite detalles menores del proceso investigativo.",
+                        "val": 4
+                    },
+                    {
+                        "nivel": "Superior",
+                        "desc": "Define con claridad problema, método y conclusiones. Dominio perfecto de conceptos estructurantes e investigación profunda.",
+                        "val": 5
+                    }
+                ]
+            },
+            {
+                "criterio": "3. Argumentación y Aplicabilidad",
+                "peso": 25,
+                "niveles": [
+                    {
+                        "nivel": "No presenta",
+                        "desc": "No responde preguntas",
+                        "val": 1
+                    },
+                    {
+                        "nivel": "Bajo",
+                        "desc": "Da respuestas incoherentes. No identifica utilidad, contexto ni aplicación real del proyecto.",
+                        "val": 1.8
+                    },
+                    {
+                        "nivel": "Básico",
+                        "desc": "Dudas prolongadas o respuestas parciales. Relación del proyecto con la vida real forzada, abstracta o limitada.",
+                        "val": 3.3
+                    },
+                    {
+                        "nivel": "Alto",
+                        "desc": "Responde correctamente la mayoría de preguntas. Identifica aplicaciones prácticas, aunque genéricas o poco profundas.",
+                        "val": 4
+                    },
+                    {
+                        "nivel": "Superior",
+                        "desc": "Respuestas inmediatas, seguras, basadas en evidencia o teoria consultada. Conecta claramente resultados con aplicaciones reales.",
+                        "val": 5
+                    }
+                ]
+            },
+            {
+                "criterio": "4. Innovación y Funcionalidad del Prototipo",
+                "peso": 20,
+                "niveles": [
+                    {
+                        "nivel": "No presenta",
+                        "desc": "No presenta prototipo o diseño experimental",
+                        "val": 1
+                    },
+                    {
+                        "nivel": "Bajo",
+                        "desc": "Modelo no funcional. Mínimo esfuerzo, improvisación o total desinterés en el diseño.",
+                        "val": 1.8
+                    },
+                    {
+                        "nivel": "Básico",
+                        "desc": "Diseño poco original, frágil o incompleto. Funcionamiento intermitente que requiere ajustes constantes.",
+                        "val": 3.3
+                    },
+                    {
+                        "nivel": "Alto",
+                        "desc": "Prototipo funcional y de diseño sólido. Montaje de buena calidad, pero con idea común o fallos mínimos.",
+                        "val": 4
+                    },
+                    {
+                        "nivel": "Superior",
+                        "desc": "Prototipo original, robusto y 100% funcional. Evidencia alto esfuerzo, recursividad y excelente diseño técnico.",
+                        "val": 5
+                    }
+                ]
+            },
+            {
+                "criterio": "5. Recursos Visuales (Póster, carletera/Apoyos)",
+                "peso": 15,
+                "niveles": [
+                    {
+                        "nivel": "No presenta",
+                        "desc": "No prenta cartelera o poster",
+                        "val": 1
+                    },
+                    {
+                        "nivel": "Bajo",
+                        "desc": "Presentación desordenada e ilegible. Errores ortográficos inaceptables. No aporta a la exposición.",
+                        "val": 1.8
+                    },
+                    {
+                        "nivel": "Básico",
+                        "desc": "Saturación de texto masivo. Escasez de imágenes, orden visual confuso y varios errores ortográficos.",
+                        "val": 3.3
+                    },
+                    {
+                        "nivel": "Alto",
+                        "desc": "Ayuda visual ordenada y con estructura lógica. Leve exceso de texto o gráficos poco explícitos. Sin errores ortográficos graves.",
+                        "val": 4
+                    },
+                    {
+                        "nivel": "Superior",
+                        "desc": "Estructura científica clara. Altamente visual, equilibrio texto-gráficos propios y ortografía impecable.",
+                        "val": 5
+                    }
                 ]
             }
         ]
     }
 ];
-
 // ==========================================
 // 1. BASE DE DATOS (ColegioDB v3) Y SEGURIDAD
 // ==========================================
 let db;
 const DB_NAME = 'ColegioDB';
 const DB_VERSION = 3;
-let cacheEstudiantes = []; // Caché en memoria para búsquedas instantáneas por nombre o documento
+let cacheEstudiantes = [];
 
 const request = indexedDB.open(DB_NAME, DB_VERSION);
 
@@ -313,7 +661,9 @@ function actualizarMateriaEnReportes(nombreViejo, nombreNuevo) {
 // ==========================================
 function navegar(pantalla, elemento) {
     document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-    document.getElementById('pantalla' + pantalla).classList.add('active');
+    const target = document.getElementById('pantalla' + pantalla);
+    if (target) target.classList.add('active');
+
     document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
     if (elemento) elemento.classList.add('active');
 
@@ -369,7 +719,6 @@ function importarExcel(event) {
         const transaccion = db.transaction(['estudiantes'], 'readwrite');
         const store = transaccion.objectStore('estudiantes');
 
-        // 1. Leemos primero los estudiantes actuales para evitar cualquier duplicado
         store.getAll().onsuccess = (ev) => {
             const existentes = ev.target.result || [];
             const docsExistentes = new Set();
@@ -452,7 +801,6 @@ function actualizarListasDeGrados() {
     };
 }
 
-// Función auxiliar universal para comprobar si un estudiante coincide con el texto digitado (Nombre o Documento)
 function coincideBusquedaEstudiante(est, textoDigitado) {
     if (!textoDigitado) return true;
     const busq = normalizarTextoBusqueda(textoDigitado);
@@ -486,7 +834,6 @@ function filtrarEstudiantes() {
         selectEst.appendChild(opt);
     });
 
-    // Si al escribir queda 1 sola coincidencia, la seleccionamos automáticamente para agilizar
     if (texto.trim() !== "" && lista.length === 1) {
         selectEst.value = lista[0].id;
         seleccionarEstudiante();
@@ -949,8 +1296,8 @@ function eliminarTodosEstudiantes() {
 const NOMBRES_NIVELES = ["No presenta", "Bajo", "Básico", "Alto", "Superior"];
 let rubricaActivaObj = null;
 let rubricaEnEdicionObj = null;
-let seleccionesRubricActual = {}; // { [indiceCriterio]: indiceNivel (0..4) }
-let idsSeleccionadosGrupoTemp = new Set(); // Mantiene los estudiantes marcados de diferentes grados en el modal de grupos
+let seleccionesRubricActual = {};
+let idsSeleccionadosGrupoTemp = new Set();
 
 function parsearNumeroDecimal(valor, porDefecto = 0) {
     if (valor === undefined || valor === null || valor === "") return porDefecto;
@@ -959,7 +1306,6 @@ function parsearNumeroDecimal(valor, porDefecto = 0) {
     return isNaN(num) ? porDefecto : num;
 }
 
-// Sincroniza las rúbricas prediseñadas del código con la base de datos local sin duplicarlas
 function sincronizarRubricasPredisenadas(mostrarAlerta = false) {
     if (!db || !Array.isArray(RUBRICAS_PREDISEÑADAS)) return;
     const t = db.transaction(['rubricas'], 'readwrite');
@@ -995,7 +1341,6 @@ function sincronizarRubricasPredisenadas(mostrarAlerta = false) {
     };
 }
 
-// Permite al docente administrador copiar todas las rúbricas actuales como código JS para pegarlas en RUBRICAS_PREDISEÑADAS
 function copiarCodigoRubricasPredisenadas() {
     db.transaction(['rubricas'], 'readonly').objectStore('rubricas').getAll().onsuccess = (e) => {
         const todas = (e.target.result || []).map(r => ({
@@ -1010,7 +1355,7 @@ function copiarCodigoRubricasPredisenadas() {
 
         if (navigator.clipboard && navigator.clipboard.writeText) {
             navigator.clipboard.writeText(bloqueCodigo).then(() => {
-                alert("✅ ¡Código copiado al portapapeles!\n\nAhora solo abre tu archivo app.js, reemplaza el bloque 'const RUBRICAS_PREDISEÑADAS = [...];' del inicio y súbelo a GitHub. Así todos los profes tendrán estas rúbricas listas desde que abran la app.");
+                alert("✅ ¡Código copiado al portapapeles!\n\nAhora solo abre tu archivo app.js, reemplaza el bloque 'const RUBRICAS_PREDISEÑADAS = [...];' del inicio y súbelo a GitHub.");
             });
         } else {
             prompt("Copia este código y pégalo al inicio de tu archivo app.js:", bloqueCodigo);
@@ -1018,7 +1363,6 @@ function copiarCodigoRubricasPredisenadas() {
     };
 }
 
-// Descargar plantilla de Excel con las 12 columnas oficiales
 function descargarPlantillaRubricaExcel() {
     const encabezados = [
         "Criterios", "Peso",
@@ -1062,7 +1406,6 @@ function descargarPlantillaRubricaExcel() {
     XLSX.writeFile(libro, "Plantilla_RAYDis_Rubric.xlsx");
 }
 
-// Importar una o varias rúbricas desde Excel (en Datos -> Gestión de Rúbricas)
 function importarRubricasExcel(event) {
     const archivo = event.target.files[0];
     if (!archivo) return;
@@ -1367,13 +1710,11 @@ function filtrarEstudiantesRubric() {
     }
 }
 
-// Carga los grupos (incluyendo grupos multigrado)
 function cargarGruposRubric() {
     const gradoFiltro = document.getElementById('rubricGrado').value;
     db.transaction(['grupos'], 'readonly').objectStore('grupos').getAll().onsuccess = (e) => {
         let grupos = e.target.result || [];
         if (gradoFiltro) {
-            // Muestra grupos de ese grado o grupos multigrado que contengan estudiantes de ese grado
             const idsEstGrado = new Set(cacheEstudiantes.filter(est => est.grado === gradoFiltro).map(est => est.id));
             grupos = grupos.filter(g => g.grado === gradoFiltro || (g.estudiantes_ids && g.estudiantes_ids.some(id => idsEstGrado.has(id))));
         }
@@ -1499,7 +1840,6 @@ function guardarNuevoGrupo() {
     if (!nombre) return alert("Escribe un nombre para el grupo.");
     if (ids.length === 0) return alert("Selecciona al menos un estudiante para el grupo.");
 
-    // Calculamos automáticamente los grados representados en el grupo (permite Multigrado)
     const mapa = {};
     cacheEstudiantes.forEach(e => mapa[e.id] = e.grado);
     const gradosUnicos = [...new Set(ids.map(id => mapa[id]).filter(Boolean))].sort();
@@ -1642,7 +1982,9 @@ function limpiarFormularioEvaluacionRubric() {
     seleccionesRubricActual = {};
     document.getElementById('idValoracionEnEdicion').value = '';
     document.getElementById('rubricObservacion').value = '';
-    document.getElementById('lblEstadoEdicionRubric').style.display = 'none';
+    const badge = document.getElementById('lblEstadoEdicionRubric');
+    badge.style.display = 'none';
+    badge.textContent = 'Editando';
     document.getElementById('btnCancelarEdicionRubric').style.display = 'none';
     renderizarMatrizBotonesRubric();
 }
@@ -1650,24 +1992,27 @@ function limpiarFormularioEvaluacionRubric() {
 function cargarValoracionPreviaSiExiste() {
     if (!rubricaActivaObj) return;
     const modo = document.getElementById('rubricModo').value;
-    const actividad = document.getElementById('rubricActividad').value.trim();
+    const inputAct = document.getElementById('rubricActividad').value.trim();
+    const actividadBuscada = inputAct || rubricaActivaObj.nombre;
 
     db.transaction(['valoraciones'], 'readonly').objectStore('valoraciones').index('rubrica_id').getAll(IDBKeyRange.only(rubricaActivaObj.id)).onsuccess = (e) => {
-        const vals = e.target.result.filter(v => !actividad || v.actividad === actividad);
+        const vals = e.target.result.filter(v => v.actividad === actividadBuscada);
         let encontrada = null;
 
         if (modo === 'estudiante') {
             const estId = parseInt(document.getElementById('rubricSelectEstudiante').value);
-            if (estId) encontrada = vals.find(v => v.estudiante_id === estId);
+            if (estId) {
+                encontrada = vals.find(v => v.estudiante_id === estId);
+                if (encontrada) cargarValoracionEnFormularioParaEditar(encontrada, false);
+                else limpiarFormularioEvaluacionRubric();
+            }
         } else if (modo === 'grupo') {
             const grpId = parseInt(document.getElementById('rubricSelectGrupo').value);
-            if (grpId) encontrada = vals.find(v => v.grupo_id === grpId);
-        }
-
-        if (encontrada) {
-            cargarValoracionEnFormularioParaEditar(encontrada);
-        } else {
-            limpiarFormularioEvaluacionRubric();
+            if (grpId) {
+                encontrada = vals.find(v => v.grupo_id === grpId);
+                if (encontrada) cargarValoracionEnFormularioParaEditar(encontrada, true);
+                else limpiarFormularioEvaluacionRubric();
+            }
         }
     };
 }
@@ -1696,6 +2041,41 @@ function guardarValoracionRubric() {
     const t = db.transaction(['estudiantes', 'grupos', 'valoraciones'], 'readwrite');
     const storeVal = t.objectStore('valoraciones');
 
+    if (idEdicion && idEdicion.startsWith('GRUPO|')) {
+        const partes = idEdicion.split('|');
+        const grpIdEditar = parseInt(partes[1]);
+        const actOriginal = decodeURIComponent(partes[2] || '');
+        const fechaOriginal = partes[3] || '';
+
+        storeVal.index('rubrica_id').openCursor(IDBKeyRange.only(rubricaActivaObj.id)).onsuccess = (e) => {
+            const cursor = e.target.result;
+            if (cursor) {
+                const reg = cursor.value;
+                const mismoGrupo = reg.grupo_id === grpIdEditar;
+                const mismaAct = reg.actividad === actOriginal;
+                const mismaFecha = !fechaOriginal || reg.fecha === fechaOriginal;
+
+                if (mismoGrupo && mismaAct && mismaFecha) {
+                    reg.selecciones = { ...seleccionesRubricActual };
+                    reg.nota_final = notaFinal;
+                    reg.observacion = observacion;
+                    reg.actividad = actividad;
+                    reg.materia = materia;
+                    reg.timestamp = Date.now();
+                    cursor.update(reg);
+                }
+                cursor.continue();
+            }
+        };
+
+        t.oncomplete = () => {
+            alert(`✅ Valoración del grupo actualizada para todos sus integrantes (Nueva Nota: ${notaFinal.toFixed(2)}).`);
+            limpiarFormularioEvaluacionRubric();
+            cargarValoracionesGuardadas();
+        };
+        return;
+    }
+
     if (idEdicion) {
         storeVal.get(parseInt(idEdicion)).onsuccess = (e) => {
             const reg = e.target.result;
@@ -1705,12 +2085,12 @@ function guardarValoracionRubric() {
                 reg.observacion = observacion;
                 reg.actividad = actividad;
                 reg.materia = materia;
-                reg.fecha = fechaHoy;
+                reg.timestamp = Date.now();
                 storeVal.put(reg);
             }
         };
         t.oncomplete = () => {
-            alert("✅ Valoración actualizada.");
+            alert(`✅ Valoración individual actualizada (Nueva Nota: ${notaFinal.toFixed(2)}).`);
             limpiarFormularioEvaluacionRubric();
             cargarValoracionesGuardadas();
         };
@@ -1774,18 +2154,66 @@ function guardarValoracionRubric() {
     }
 
     t.oncomplete = () => {
-        alert(`✅ Valoración guardada (Nota: ${notaFinal.toFixed(2)}).`);
+        alert(`✅ Valoración guardada en "${actividad}" (Nota: ${notaFinal.toFixed(2)}).`);
         limpiarFormularioEvaluacionRubric();
         cargarValoracionesGuardadas();
     };
 }
 
 // ==========================================
-// HISTORIAL, MODIFICACIÓN Y EXPORTACIÓN RUBRIC
+// FILTRADO INTELIGENTE, HISTORIAL Y EDICIÓN GRUPAL
 // ==========================================
+function actualizarSelectoresFiltroResultados(todasLasValoraciones) {
+    const selAct = document.getElementById('filtroActividadRubric');
+    const selFecha = document.getElementById('filtroFechaRubric');
+    if (!selAct || !selFecha) return;
+
+    const prevAct = selAct.value;
+    const prevFecha = selFecha.value;
+
+    const actividadesUnicas = [...new Set(todasLasValoraciones.map(v => v.actividad).filter(Boolean))].sort();
+    const fechasUnicas = [...new Set(todasLasValoraciones.map(v => v.fecha).filter(Boolean))].sort().reverse();
+
+    selAct.innerHTML = '<option value="">Todas las actividades...</option>';
+    actividadesUnicas.forEach(act => {
+        selAct.innerHTML += `<option value="${act.replace(/"/g, '&quot;')}">${act}</option>`;
+    });
+    if (actividadesUnicas.includes(prevAct)) selAct.value = prevAct;
+
+    selFecha.innerHTML = '<option value="">Todas las fechas...</option>';
+    fechasUnicas.forEach(f => {
+        selFecha.innerHTML += `<option value="${f}">${f}</option>`;
+    });
+    if (fechasUnicas.includes(prevFecha)) selFecha.value = prevFecha;
+}
+
+function aplicarFiltrosActivosValoraciones(lista) {
+    const gradoFiltro = document.getElementById('rubricGrado') ? document.getElementById('rubricGrado').value : '';
+    const actFiltro = document.getElementById('filtroActividadRubric') ? document.getElementById('filtroActividadRubric').value : '';
+    const fechaFiltro = document.getElementById('filtroFechaRubric') ? document.getElementById('filtroFechaRubric').value : '';
+
+    return lista.filter(v => {
+        const pasaGrado = !gradoFiltro || v.grado === gradoFiltro;
+        const pasaAct = !actFiltro || v.actividad === actFiltro;
+        const pasaFecha = !fechaFiltro || v.fecha === fechaFiltro;
+        return pasaGrado && pasaAct && pasaFecha;
+    });
+}
+
+function obtenerSufijoArchivoFiltrado() {
+    const grado = document.getElementById('rubricGrado') ? document.getElementById('rubricGrado').value : '';
+    const act = document.getElementById('filtroActividadRubric') ? document.getElementById('filtroActividadRubric').value : '';
+    const fecha = document.getElementById('filtroFechaRubric') ? document.getElementById('filtroFechaRubric').value : '';
+
+    const partes = [];
+    if (act) partes.push(act.replace(/\s+/g, '_'));
+    if (grado) partes.push(`Grado_${grado}`);
+    if (fecha) partes.push(fecha);
+    return partes.length > 0 ? partes.join('_') : 'General';
+}
+
 function cargarValoracionesGuardadas() {
     if (!rubricaActivaObj) return;
-    const gradoFiltro = document.getElementById('rubricGrado').value;
     const cont = document.getElementById('listaValoracionesGuardadas');
 
     const t = db.transaction(['valoraciones', 'estudiantes'], 'readonly');
@@ -1794,28 +2222,37 @@ function cargarValoracionesGuardadas() {
         eEst.target.result.forEach(est => mapaEst[est.id] = est);
 
         t.objectStore('valoraciones').index('rubrica_id').getAll(IDBKeyRange.only(rubricaActivaObj.id)).onsuccess = (eVal) => {
-            let lista = eVal.target.result;
-            if (gradoFiltro) lista = lista.filter(v => v.grado === gradoFiltro);
+            const todas = eVal.target.result || [];
+            actualizarSelectoresFiltroResultados(todas);
+
+            let lista = aplicarFiltrosActivosValoraciones(todas);
             lista.sort((a, b) => b.timestamp - a.timestamp);
 
             if (lista.length === 0) {
-                cont.innerHTML = '<p style="font-size:0.85rem; color:#888; text-align:center;">Aún no hay valoraciones guardadas para esta selección.</p>';
+                cont.innerHTML = '<p style="font-size:0.85rem; color:#888; text-align:center;">No hay valoraciones que coincidan con los filtros seleccionados.</p>';
                 return;
             }
 
             cont.innerHTML = '';
             lista.forEach(v => {
                 const estNom = mapaEst[v.estudiante_id] ? mapaEst[v.estudiante_id].nombre : 'Estudiante eliminado';
+                const esDeGrupo = v.grupo_id !== null && v.grupo_id !== undefined;
+
+                const btnEditarGrupo = esDeGrupo
+                    ? `<button onclick="editarValoracionDesdeHistorial(${v.id}, true)" style="background:#16a085; color:white; border:none; padding:5px 8px; border-radius:4px; cursor:pointer; font-size:0.78rem;" title="Modificar valoración para TODO el grupo (${v.grupo_nombre})">👥✏️</button>`
+                    : '';
+
                 cont.innerHTML += `
-                <div style="border:1px solid #ddd; background:#f8f9fa; padding:8px 10px; border-radius:6px; margin-bottom:6px; display:flex; justify-content:space-between; align-items:center; font-size:0.85rem;">
-                    <div>
-                        <strong>${estNom}</strong> <span style="color:#666;">(${v.grado} - ${v.grupo_nombre || 'Individual'})</span><br>
-                        <small>${v.actividad} | ${v.materia} | <b>Nota: <span style="color:#117864;">${Number(v.nota_final).toFixed(2)}</span></b></small>
+                <div style="border:1px solid #ddd; background:#f8f9fa; padding:8px 10px; border-radius:6px; margin-bottom:6px; display:flex; justify-content:space-between; align-items:center; font-size:0.85rem; gap:0.4rem;">
+                    <div style="flex:1;">
+                        <strong>${estNom}</strong> <span style="color:#117864; font-weight:600;">(${v.grado} — ${v.grupo_nombre || 'Individual'})</span><br>
+                        <small style="color:#555;">📌 <b>${v.actividad}</b> | 📅 ${v.fecha} | ${v.materia} | <b>Nota: <span style="color:#117864; font-size:0.92rem;">${Number(v.nota_final).toFixed(2)}</span></b></small>
                     </div>
-                    <div style="display:flex; gap:0.35rem;">
+                    <div style="display:flex; gap:0.3rem; flex-shrink:0;">
                         <button onclick="exportarValoracionIndividualPDF(${v.id})" style="background:#8e44ad; color:white; border:none; padding:5px 8px; border-radius:4px; cursor:pointer;" title="Exportar PDF Individual">📄</button>
-                        <button onclick="editarValoracionDesdeHistorial(${v.id})" style="background:#3498db; color:white; border:none; padding:5px 8px; border-radius:4px; cursor:pointer;" title="Modificar valoración">✏️</button>
-                        <button onclick="eliminarValoracionRubric(${v.id})" style="background:var(--danger); color:white; border:none; padding:5px 8px; border-radius:4px; cursor:pointer;" title="Borrar valoración">🗑️</button>
+                        ${btnEditarGrupo}
+                        <button onclick="editarValoracionDesdeHistorial(${v.id}, false)" style="background:#3498db; color:white; border:none; padding:5px 8px; border-radius:4px; cursor:pointer;" title="Modificar solo a este estudiante">👤✏️</button>
+                        <button onclick="eliminarValoracionRubric(${v.id})" style="background:var(--danger); color:white; border:none; padding:5px 8px; border-radius:4px; cursor:pointer;" title="Borrar esta valoración">🗑️</button>
                     </div>
                 </div>`;
             });
@@ -1823,34 +2260,43 @@ function cargarValoracionesGuardadas() {
     };
 }
 
-function editarValoracionDesdeHistorial(idVal) {
+function editarValoracionDesdeHistorial(idVal, editarTodoElGrupo = false) {
     db.transaction(['valoraciones'], 'readonly').objectStore('valoraciones').get(idVal).onsuccess = (e) => {
         const val = e.target.result;
         if (!val) return;
-        cargarValoracionEnFormularioParaEditar(val);
+        cargarValoracionEnFormularioParaEditar(val, editarTodoElGrupo);
         window.scrollTo({ top: document.getElementById('cardMatrizEvaluacion').offsetTop - 70, behavior: 'smooth' });
     };
 }
 
-function cargarValoracionEnFormularioParaEditar(val) {
-    document.getElementById('idValoracionEnEdicion').value = val.id;
+function cargarValoracionEnFormularioParaEditar(val, editarTodoElGrupo = false) {
+    const badge = document.getElementById('lblEstadoEdicionRubric');
+
+    if (editarTodoElGrupo && val.grupo_id) {
+        document.getElementById('idValoracionEnEdicion').value = `GRUPO|${val.grupo_id}|${encodeURIComponent(val.actividad || '')}|${val.fecha || ''}`;
+        badge.textContent = `👥 Editando Grupo: ${val.grupo_nombre} (${val.actividad})`;
+    } else {
+        document.getElementById('idValoracionEnEdicion').value = String(val.id);
+        badge.textContent = `👤 Editando Estudiante Individual (${val.actividad})`;
+    }
+
     document.getElementById('rubricObservacion').value = val.observacion || '';
     document.getElementById('rubricActividad').value = val.actividad || '';
-    document.getElementById('lblEstadoEdicionRubric').style.display = 'inline-block';
+    badge.style.display = 'inline-block';
     document.getElementById('btnCancelarEdicionRubric').style.display = 'inline-block';
     seleccionesRubricActual = { ...val.selecciones };
     renderizarMatrizBotonesRubric();
 }
 
 function eliminarValoracionRubric(idVal) {
-    if (!confirm("¿Eliminar esta valoración?")) return;
+    if (!confirm("¿Eliminar esta valoración individual?")) return;
     const t = db.transaction(['valoraciones'], 'readwrite');
     t.objectStore('valoraciones').delete(idVal);
     t.oncomplete = () => cargarValoracionesGuardadas();
 }
 
 // ==========================================
-// EXPORTACIONES RUBRIC (EXCEL Y PDF)
+// EXPORTACIONES RUBRIC (EXCEL Y PDF CON FILTROS)
 // ==========================================
 function exportarRubricaPorIdExcel(idRubrica) {
     db.transaction(['rubricas'], 'readonly').objectStore('rubricas').get(idRubrica).onsuccess = (e) => {
@@ -1918,9 +2364,33 @@ function exportarRubricaEnBlancoPDF() {
     abrirVentanaImpresionPDF(`Rúbrica - ${rubricaActivaObj.nombre}`, html);
 }
 
+function armarDatosExcelValoraciones(vals, mapaEst) {
+    return vals.map(v => {
+        const est = mapaEst[v.estudiante_id] || { documento: 'N/A', nombre: 'Eliminado' };
+        const filaObj = {
+            "Fecha": v.fecha,
+            "Grado": v.grado,
+            "Grupo": v.grupo_nombre || "Individual",
+            "Documento": est.documento,
+            "Estudiante": est.nombre,
+            "Materia": v.materia,
+            "Actividad": v.actividad
+        };
+
+        rubricaActivaObj.criterios.forEach((crit, cIdx) => {
+            const nIdx = v.selecciones[cIdx];
+            const niv = (nIdx !== undefined && crit.niveles[nIdx]) ? crit.niveles[nIdx] : null;
+            filaObj[`${crit.criterio} (${crit.peso}%)`] = niv ? `${niv.nivel} (${niv.val})` : "Sin evaluar (0)";
+        });
+
+        filaObj["Valoración Total"] = Number(v.nota_final).toFixed(2);
+        filaObj["Observaciones"] = v.observacion || "";
+        return filaObj;
+    });
+}
+
 function exportarValoracionesExcel() {
     if (!rubricaActivaObj) return;
-    const gradoFiltro = document.getElementById('rubricGrado').value;
 
     const t = db.transaction(['valoraciones', 'estudiantes'], 'readonly');
     t.objectStore('estudiantes').getAll().onsuccess = (eEst) => {
@@ -1928,37 +2398,14 @@ function exportarValoracionesExcel() {
         eEst.target.result.forEach(est => mapaEst[est.id] = est);
 
         t.objectStore('valoraciones').index('rubrica_id').getAll(IDBKeyRange.only(rubricaActivaObj.id)).onsuccess = (eVal) => {
-            let vals = eVal.target.result;
-            if (gradoFiltro) vals = vals.filter(v => v.grado === gradoFiltro);
-            if (vals.length === 0) return alert("No hay valoraciones registradas para exportar.");
+            const vals = aplicarFiltrosActivosValoraciones(eVal.target.result || []);
+            if (vals.length === 0) return alert("No hay valoraciones con los filtros actuales para exportar.");
 
-            const data = vals.map(v => {
-                const est = mapaEst[v.estudiante_id] || { documento: 'N/A', nombre: 'Eliminado' };
-                const filaObj = {
-                    "Fecha": v.fecha,
-                    "Grado": v.grado,
-                    "Grupo": v.grupo_nombre || "Individual",
-                    "Documento": est.documento,
-                    "Estudiante": est.nombre,
-                    "Materia": v.materia,
-                    "Actividad": v.actividad
-                };
-
-                rubricaActivaObj.criterios.forEach((crit, cIdx) => {
-                    const nIdx = v.selecciones[cIdx];
-                    const niv = (nIdx !== undefined && crit.niveles[nIdx]) ? crit.niveles[nIdx] : null;
-                    filaObj[`${crit.criterio} (${crit.peso}%)`] = niv ? `${niv.nivel} (${niv.val})` : "Sin evaluar (0)";
-                });
-
-                filaObj["Valoración Total"] = Number(v.nota_final).toFixed(2);
-                filaObj["Observaciones"] = v.observacion || "";
-                return filaObj;
-            });
-
+            const data = armarDatosExcelValoraciones(vals, mapaEst);
             const hoja = XLSX.utils.json_to_sheet(data);
             const libro = XLSX.utils.book_new();
             XLSX.utils.book_append_sheet(libro, hoja, "Valoraciones");
-            const sufijo = gradoFiltro ? `Grado_${gradoFiltro}` : `General`;
+            const sufijo = obtenerSufijoArchivoFiltrado();
             XLSX.writeFile(libro, `RAYDis_Rubric_${rubricaActivaObj.nombre.replace(/\s+/g, '_')}_${sufijo}.xlsx`);
         };
     };
@@ -2004,14 +2451,13 @@ function exportarValoracionIndividualPDF(idVal) {
                 <h3 style="margin-top:12px;">Valoración Definitiva: ${Number(v.nota_final).toFixed(2)}</h3>
                 ${v.observacion ? `<p><b>Observaciones:</b> ${v.observacion}</p>` : ''}
             `;
-            abrirVentanaImpresionPDF(`RAYDis_Rubric_${est.nombre}`, html);
+            abrirVentanaImpresionPDF(`RAYDis_Rubric_${est.nombre}_${v.actividad}`, html);
         };
     };
 }
 
 function exportarValoracionesGrupoPDF() {
     if (!rubricaActivaObj) return;
-    const gradoFiltro = document.getElementById('rubricGrado').value;
 
     const t = db.transaction(['valoraciones', 'estudiantes'], 'readonly');
     t.objectStore('estudiantes').getAll().onsuccess = (eEst) => {
@@ -2019,9 +2465,8 @@ function exportarValoracionesGrupoPDF() {
         eEst.target.result.forEach(est => mapaEst[est.id] = est);
 
         t.objectStore('valoraciones').index('rubrica_id').getAll(IDBKeyRange.only(rubricaActivaObj.id)).onsuccess = (eVal) => {
-            let vals = eVal.target.result;
-            if (gradoFiltro) vals = vals.filter(v => v.grado === gradoFiltro);
-            if (vals.length === 0) return alert("No hay valoraciones registradas para exportar.");
+            const vals = aplicarFiltrosActivosValoraciones(eVal.target.result || []);
+            if (vals.length === 0) return alert("No hay valoraciones con los filtros actuales para exportar.");
 
             let cabecerasCriterios = '';
             rubricaActivaObj.criterios.forEach((c, idx) => {
@@ -2040,6 +2485,7 @@ function exportarValoracionesGrupoPDF() {
 
                 filas += `
                     <tr>
+                        <td>${v.fecha}</td>
                         <td>${v.grado}</td>
                         <td>${v.grupo_nombre || 'Ind.'}</td>
                         <td><b>${est.nombre}</b></td>
@@ -2049,11 +2495,14 @@ function exportarValoracionesGrupoPDF() {
                     </tr>`;
             });
 
+            const sufijo = obtenerSufijoArchivoFiltrado();
             const html = `
                 <h2>Consolidado de Evaluación - Rúbrica: ${rubricaActivaObj.nombre}</h2>
+                <p><b>Filtro aplicado:</b> ${sufijo.replace(/_/g, ' ')}</p>
                 <table>
                     <thead>
                         <tr>
+                            <th>Fecha</th>
                             <th>Grado</th>
                             <th>Grupo</th>
                             <th>Estudiante</th>
@@ -2065,7 +2514,7 @@ function exportarValoracionesGrupoPDF() {
                     <tbody>${filas}</tbody>
                 </table>
             `;
-            abrirVentanaImpresionPDF(`Consolidado_${rubricaActivaObj.nombre}`, html);
+            abrirVentanaImpresionPDF(`Consolidado_${rubricaActivaObj.nombre}_${sufijo}`, html);
         };
     };
 }
@@ -2098,4 +2547,118 @@ function abrirVentanaImpresionPDF(titulo, contenidoHTML) {
         </html>
     `);
     ventana.document.close();
+}
+
+// =========================================================
+// COMPARTIR EXCEL POR WHATSAPP / CORREO Y BORRADO CON FILTROS
+// =========================================================
+function compartirValoracionesExcel() {
+    if (!rubricaActivaObj) return alert("Primero selecciona una rúbrica.");
+
+    const t = db.transaction(['valoraciones', 'estudiantes'], 'readonly');
+    t.objectStore('estudiantes').getAll().onsuccess = (eEst) => {
+        const mapaEst = {};
+        eEst.target.result.forEach(est => mapaEst[est.id] = est);
+
+        t.objectStore('valoraciones').index('rubrica_id').getAll(IDBKeyRange.only(rubricaActivaObj.id)).onsuccess = async (eVal) => {
+            const vals = aplicarFiltrosActivosValoraciones(eVal.target.result || []);
+            if (vals.length === 0) return alert("No hay valoraciones con los filtros actuales para compartir.");
+
+            const data = armarDatosExcelValoraciones(vals, mapaEst);
+            const hoja = XLSX.utils.json_to_sheet(data);
+            const libro = XLSX.utils.book_new();
+            XLSX.utils.book_append_sheet(libro, hoja, "Valoraciones");
+
+            const sufijo = obtenerSufijoArchivoFiltrado();
+            const nombreArchivo = `RAYDis_Rubric_${rubricaActivaObj.nombre.replace(/\s+/g, '_')}_${sufijo}.xlsx`;
+
+            const excelBuffer = XLSX.write(libro, { bookType: 'xlsx', type: 'array' });
+            const mimeExcel = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
+            const blob = new Blob([excelBuffer], { type: mimeExcel });
+            const archivoExcel = new File([blob], nombreArchivo, { type: mimeExcel });
+
+            const textoMensaje = `📊 Consolidado de evaluaciones RAYDis\nRúbrica: ${rubricaActivaObj.nombre}\nFiltro: ${sufijo.replace(/_/g, ' ')} (${vals.length} registros).`;
+
+            if (navigator.canShare && navigator.canShare({ files: [archivoExcel] })) {
+                try {
+                    await navigator.share({
+                        title: `Evaluaciones - ${rubricaActivaObj.nombre}`,
+                        text: textoMensaje,
+                        files: [archivoExcel]
+                    });
+                    return;
+                } catch (err) {
+                    if (err.name === 'AbortError') return;
+                }
+            }
+
+            XLSX.writeFile(libro, nombreArchivo);
+            const opcion = prompt(
+                `📥 Se descargó el archivo "${nombreArchivo}".\n\n` +
+                `Escribe:\n` +
+                `1 -> Para abrir WhatsApp\n` +
+                `2 -> Para abrir tu Correo Electrónico\n` +
+                `(Luego solo adjunta el archivo descargado)`
+            );
+
+            if (opcion === '1') {
+                window.open(`https://wa.me/?text=${encodeURIComponent(textoMensaje)}`, '_blank');
+            } else if (opcion === '2') {
+                const asunto = `Evaluaciones ${rubricaActivaObj.nombre} - ${sufijo.replace(/_/g, ' ')}`;
+                window.location.href = `mailto:?subject=${encodeURIComponent(asunto)}&body=${encodeURIComponent(textoMensaje + "\n\n(Adjuntar el archivo Excel descargado)")}`;
+            }
+        };
+    };
+}
+
+function eliminarValoracionesRubricaActiva() {
+    if (!rubricaActivaObj) return;
+    const gradoFiltro = document.getElementById('rubricGrado').value;
+    const actFiltro = document.getElementById('filtroActividadRubric').value;
+    const fechaFiltro = document.getElementById('filtroFechaRubric').value;
+
+    const detallesFiltro = [
+        `Rúbrica: "${rubricaActivaObj.nombre}"`,
+        actFiltro ? `Actividad: "${actFiltro}"` : `Actividad: Todas`,
+        fechaFiltro ? `Fecha: ${fechaFiltro}` : `Fecha: Todas`,
+        gradoFiltro ? `Grado: ${gradoFiltro}` : `Grado: Todos`
+    ].join('\n• ');
+
+    if (!confirm(`🗑️ ¿Estás seguro de eliminar las valoraciones que coinciden con este filtro?\n\n• ${detallesFiltro}`)) return;
+
+    const t = db.transaction(['valoraciones'], 'readwrite');
+    const store = t.objectStore('valoraciones');
+    let borradas = 0;
+
+    store.openCursor().onsuccess = (e) => {
+        const cursor = e.target.result;
+        if (cursor) {
+            const v = cursor.value;
+            const coincideRubrica = v.rubrica_id === rubricaActivaObj.id;
+            const coincideGrado = !gradoFiltro || v.grado === gradoFiltro;
+            const coincideAct = !actFiltro || v.actividad === actFiltro;
+            const coincideFecha = !fechaFiltro || v.fecha === fechaFiltro;
+
+            if (coincideRubrica && coincideGrado && coincideAct && coincideFecha) {
+                cursor.delete();
+                borradas++;
+            }
+            cursor.continue();
+        } else {
+            alert(`✅ Se eliminaron ${borradas} valoraciones del filtro seleccionado.`);
+            limpiarFormularioEvaluacionRubric();
+            cargarValoracionesGuardadas();
+        }
+    };
+}
+
+function eliminarTodasLasValoraciones() {
+    if (!confirm("⚠️ ATENCIÓN: ¿Estás seguro de eliminar TODAS las valoraciones realizadas en todas las rúbricas de la aplicación?")) return;
+
+    const t = db.transaction(['valoraciones'], 'readwrite');
+    t.objectStore('valoraciones').clear().onsuccess = () => {
+        alert("✅ Todas las valoraciones han sido eliminadas.");
+        limpiarFormularioEvaluacionRubric();
+        cargarValoracionesGuardadas();
+    };
 }

@@ -20,15 +20,26 @@
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
         body {
             background-color: var(--bg);
-            /* Soporta automáticamente fondo.jpg, fondo.png, fondo.jpeg o Fondo.jpg */
-            background-image: url('fondo.jpg'), url('logo.png'), url('fondo.jpeg'), url('Fondo.jpg'), url('Fondo.png'), url('fondo.webp');
-            background-size: cover;
-            background-position: center;
-            background-attachment: fixed;
-            background-repeat: no-repeat;
             min-height: 100vh;
             color: #333;
             padding-bottom: 75px;
+            position: relative;
+        }
+        /* Marca de agua fija con el escudo institucional */
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('logo.png');
+            background-size: 620px;
+            background-position: center;
+            background-repeat: no-repeat;
+            opacity: 0.18; /* Ajusta entre 0.10 (más suave) y 0.35 (más fuerte) */
+            pointer-events: none;
+            z-index: -1;
         }
         header {
             background: rgba(44, 62, 80, 0.95);
@@ -48,7 +59,7 @@
         .screen { display: none; }
         .screen.active { display: block; }
         .card {
-            background: rgba(255, 255, 255, 0.94);
+            background: rgba(255, 255, 255, 0.88);
             backdrop-filter: blur(4px);
             padding: 1.2rem;
             border-radius: 10px;
@@ -217,7 +228,7 @@
     <div id="pantallaLogin" style="display: flex; justify-content: center; align-items: center; min-height: 100vh; padding: 1rem;">
         <div class="card" style="width: 100%; max-width: 380px; text-align: center;">
             <img src="logo.png" alt="Logo" onerror="this.style.display='none'" style="width: 80px; height: 80px; object-fit: contain; margin-bottom: 0.5rem;">
-            <h2 id="tituloLogin">I.E.D. Nacionalizado</h2>
+            <h2>I.E.D. Nacionalizado</h2>
             <h2 id="tituloLogin">🔐 Acceso RAYDis</h2>
             <p id="subtituloLogin" style="font-size: 0.9rem; color: #666; margin-bottom: 1rem;">Ingresa tu PIN de seguridad</p>
             <input type="password" id="inputPIN" placeholder="****" inputmode="numeric" style="text-align: center; font-size: 1.5rem; letter-spacing: 0.4rem;">
@@ -231,7 +242,7 @@
             <img src="logo.png" alt="Logo" onerror="this.style.display='none'">
             <div>
                 <h1 style="font-size: 1.2rem; margin: 0;">RAYDis</h1>
-                <h1 style="font-size: 0.5rem; margin: 0;">By Diego G. & Gemini Pro</h1>
+                <h1 style="font-size: 0.6rem; margin: 0;">By Diego G. & Gemini</h1>
                 <span style="font-size: 0.70rem; opacity: 0.9;">Reportes Académicos, Disciplinarios y Rúbricas</span>
             </div>
         </header>
@@ -270,13 +281,11 @@
                 <h3 id="nombreEstudianteSeleccionado" style="margin-bottom: 0.8rem;"></h3>
                 <input type="hidden" id="idEstudianteSeleccionado">
 
-                <!-- 1. Botones de registro arriba -->
                 <div style="display: flex; gap: 0.5rem;">
                     <button class="btn" style="background-color: #3498db; margin-top: 0;" onclick="mostrarFormulario('Academico')">📝 Académico</button>
                     <button class="btn" style="background-color: #e74c3c; margin-top: 0;" onclick="mostrarFormulario('Disciplinario')">⚠️ Disciplinario</button>
                 </div>
 
-                <!-- 2. Caja del acudiente debajo -->
                 <div id="infoAcudiente" style="background: #e8f8f5; padding: 10px; border-radius: 6px; margin-top: 1rem; margin-bottom: 1rem; font-size: 0.9rem; border: 1px solid #a3e4d7; display: none;">
                     <strong>Acudiente:</strong> <span id="lblAcudiente"></span><br>
                     <strong>Teléfono:</strong> <span id="lblTelAcudiente"></span>
@@ -302,7 +311,6 @@
                     <option value="">Selecciona una rúbrica...</option>
                 </select>
 
-                <!-- Botones para exportar la rúbrica en blanco -->
                 <div id="panelExportarRubricaBase" style="display: none; gap: 0.5rem; margin-top: 0.6rem;">
                     <button class="btn btn-outline" style="margin-top: 0; padding: 0.45rem; font-size: 0.82rem;" onclick="exportarRubricaEnBlancoExcel()">📊 Descargar Rúbrica (Excel)</button>
                     <button class="btn btn-outline" style="margin-top: 0; padding: 0.45rem; font-size: 0.82rem;" onclick="exportarRubricaEnBlancoPDF()">📄 Descargar Rúbrica (PDF)</button>
@@ -320,7 +328,7 @@
                     </div>
                     <div style="flex: 1; min-width: 160px;">
                         <label>Nombre de la Actividad:</label>
-                        <input type="text" id="rubricActividad" placeholder="Ej. Laboratorio 1, Exposición...">
+                        <input type="text" id="rubricActividad" placeholder="Ej. Exposición 1, Laboratorio..." oninput="cargarValoracionPreviaSiExiste()">
                     </div>
                 </div>
 
@@ -385,14 +393,43 @@
             <!-- 4. Historial de Valoraciones Guardadas y Exportación -->
             <div id="cardResultadosRubric" class="card" style="display: none;">
                 <h3>📊 Resultados y Exportación de Valoraciones</h3>
-                <p style="font-size: 0.85rem; color: #666; margin-bottom: 0.6rem;">Resultados registrados con esta rúbrica (se filtran si eliges un grado arriba).</p>
+                <p style="font-size: 0.85rem; color: #666; margin-bottom: 0.6rem;">Filtra por actividad, fecha o grado para exportar, compartir o borrar únicamente ese grupo de evaluaciones.</p>
 
-                <div style="display: flex; gap: 0.5rem; margin-bottom: 0.8rem;">
-                    <button class="btn btn-info" style="margin-top: 0; font-size: 0.88rem;" onclick="exportarValoracionesExcel()">📊 Consolidado Grupo (Excel)</button>
-                    <button class="btn btn-outline" style="margin-top: 0; font-size: 0.88rem;" onclick="exportarValoracionesGrupoPDF()">📄 Consolidado Grupo (PDF)</button>
+                <div style="display: flex; gap: 0.5rem; flex-wrap: wrap; background: #f4f6f7; padding: 0.6rem 0.8rem; border-radius: 8px; margin-bottom: 0.8rem; border: 1px solid #dce4ec;">
+                    <div style="flex: 1; min-width: 150px;">
+                        <label style="margin-top: 0; font-size: 0.82rem;">🎯 Filtrar por Actividad:</label>
+                        <select id="filtroActividadRubric" onchange="cargarValoracionesGuardadas()" style="padding: 0.5rem; font-size: 0.9rem;">
+                            <option value="">Todas las actividades...</option>
+                        </select>
+                    </div>
+                    <div style="flex: 1; min-width: 130px;">
+                        <label style="margin-top: 0; font-size: 0.82rem;">📅 Filtrar por Fecha:</label>
+                        <select id="filtroFechaRubric" onchange="cargarValoracionesGuardadas()" style="padding: 0.5rem; font-size: 0.9rem;">
+                            <option value="">Todas las fechas...</option>
+                        </select>
+                    </div>
                 </div>
 
+                <div style="display: flex; gap: 0.5rem; margin-bottom: 0.5rem;">
+                    <button class="btn btn-info" style="margin-top: 0; font-size: 0.88rem;" onclick="exportarValoracionesExcel()">📊 Descargar Excel</button>
+                    <button class="btn btn-outline" style="margin-top: 0; font-size: 0.88rem;" onclick="exportarValoracionesGrupoPDF()">📄 Consolidado PDF</button>
+                </div>
+
+                <button class="btn" style="background-color: #25D366; margin-top: 0; margin-bottom: 0.8rem; font-size: 0.9rem;" onclick="compartirValoracionesExcel()">
+                    📲 Compartir Excel (WhatsApp / Correo)
+                </button>
+
                 <div id="listaValoracionesGuardadas" style="max-height: 350px; overflow-y: auto;"></div>
+
+                <hr style="margin: 1rem 0; border: none; border-top: 1px solid #ddd;">
+                <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+                    <button class="btn btn-outline" style="border-color: var(--danger); color: var(--danger); margin-top: 0; font-size: 0.82rem; flex: 1;" onclick="eliminarValoracionesRubricaActiva()">
+                        🗑️ Borrar las del Filtro Actual
+                    </button>
+                    <button class="btn btn-danger" style="margin-top: 0; font-size: 0.82rem; flex: 1;" onclick="eliminarTodasLasValoraciones()">
+                        ⚠️ Borrar TODAS las Valoraciones
+                    </button>
+                </div>
             </div>
         </div>
 
@@ -442,7 +479,7 @@
                 </div>
             </details>
 
-            <!-- ACORDEÓN 2: GESTIÓN DE RÚBRICAS (MOVIDO AQUÍ DESDE RUBRIC) -->
+            <!-- ACORDEÓN 2: GESTIÓN DE RÚBRICAS -->
             <details class="acordeon">
                 <summary>📋 Gestión de Rúbricas (Importar, Prediseñadas y Editar)</summary>
                 <div class="acordeon-body">
@@ -547,7 +584,6 @@
             <label>Fecha del Reporte:</label>
             <input type="date" id="fechaReporte">
 
-            <!-- SECCIÓN ACADÉMICA -->
             <div id="seccionAcademico" style="display: none;">
                 <label>Situaciones Académicas (Marca las que apliquen):</label>
                 <div id="frasesAcademicoContainer" style="background: #f8f9fa; padding: 0.8rem; border-radius: 6px; max-height: 180px; overflow-y: auto; margin-top: 0.4rem;"></div>
@@ -557,7 +593,6 @@
                 <textarea id="obsAcademica" rows="3" placeholder="Detalles adicionales..."></textarea>
             </div>
 
-            <!-- SECCIÓN DISCIPLINARIA -->
             <div id="seccionDisciplinario" style="display: none;">
                 <label>Faltas o Situaciones de Convivencia:</label>
                 <div id="frasesDisciplinaContainer" style="background: #f8f9fa; padding: 0.8rem; border-radius: 6px; max-height: 150px; overflow-y: auto; margin-top: 0.4rem;"></div>
@@ -656,6 +691,6 @@
         </div>
     </div>
 
-    <script src="app.js?v=3"></script>
+    <script src="app.js?v=5"></script>
 </body>
 </html>
