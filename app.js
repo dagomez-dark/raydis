@@ -2552,61 +2552,86 @@ function abrirVentanaImpresionPDF(titulo, contenidoHTML) {
 // =========================================================
 // COMPARTIR EXCEL POR WHATSAPP / CORREO Y BORRADO CON FILTROS
 // =========================================================
-function compartirValoracionesExcel() {
+async function compartirValoracionesExcel() {
     if (!rubricaActivaObj) return alert("Primero selecciona una rúbrica.");
 
-    const t = db.transaction(['valoraciones', 'estudiantes'], 'readonly');
-    t.objectStore('estudiantes').getAll().onsuccess = (eEst) => {
-        const mapaEst = {};
-        eEst.target.result.forEach(est => mapaEst[est.id] = est);
+    // 1. Usamos cacheEstudiantes en memoria para no perder milisegundos valiosos del clic táctil
+    const mapaEst = {};
+    cacheEstudiantes.forEach(est => mapaEst[est.id] = est);
 
-        t.objectStore('valoraciones').index('rubrica_id').getAll(IDBKeyRange.only(rubricaActivaObj.id)).onsuccess = async (eVal) => {
-            const vals = aplicarFiltrosActivosValoraciones(eVal.target.result || []);
-            if (vals.length === 0) return alert("No hay valoraciones con los filtros actuales para compartir.");
+    // 2. Obtenemos las valoraciones en una promesa rápida
+    const todas = await new Promise((resolve) => {
+        const req = db.transaction(['valoraciones'], 'readonly')
+                      .objectStore('valoraciones')
+                      .index('rubrica_id')
+                      .getAll(IDBKeyRange.only(rubricaActivaObj.id));
+        req.onsuccess = (e) => resolve(e.target.result || []);
+        req.onerror = () => resolve([]);
+    });
 
-            const data = armarDatosExcelValoraciones(vals, mapaEst);
-            const hoja = XLSX.utils.json_to_sheet(data);
-            const libro = XLSX.utils.book_new();
-            XLSX.utils.book_append_sheet(libro, hoja, "Valoraciones");
+    const vals = aplicarFiltrosActivosValoraciones(todas);
+    if (vals.length === 0) return alert("No hay valoraciones con los filtros actuales para compartir.");
 
-            const sufijo = obtenerSufijoArchivoFiltrado();
-            const nombreArchivo = `RAYDis_Rubric_${rubricaActivaObj.nombre.replace(/\s+/g, '_')}_${sufijo}.xlsx`;
+    const data = armarDatosExcelValoraciones(vals, mapaEst);
+    const hoja = XLSX.utils.json_to_sheet(data);
+    const libro = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(libro, hoja, "Valoraciones");
 
-            const excelBuffer = XLSX.write(libro, { bookType: 'xlsx', type: 'array' });
-            const mimeExcel = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
-            const blob = new Blob([excelBuffer], { type: mimeExcel });
-            const archivoExcel = new File([blob], nombreArchivo, { type: mimeExcel });
+    const sufijo = obtenerSufijoArchivoFiltrado();
+    const nombreArchivo = `RAYDis_Rubric_${rubricaActivaObj.nombre.replace(/\s+/g, '_')}_${sufijo}.xlsx`;
+    const excelBuffer = XLSX.write(libro, { bookType: 'xlsx', type: 'array' });
 
-            const textoMensaje = `📊 Consolidado de evaluaciones RAYDis\nRúbrica: ${rubricaActivaObj.nombre}\nFiltro: ${sufijo.replace(/_/g, ' ')} (${vals.length} registros).`;
+    // 3. Probamos primero el MIME de Excel y, si el celular lo bloquea, usamos octet-stream
+    const mimeExcel = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
+    let archivoExcel = new File([excelBuffer], nombreArchivo, { type: mimeExcel });
 
-            if (navigator.canShare && navigator.canShare({ files: [archivoExcel] })) {
-                try {
-                    await navigator.share({
-                        files: [archivoExcel]
-                    });
-                    return;
-                } catch (err) {
-                    if (err.name === 'AbortError') return;
-                }
-            }
+    if (navigator.canShare && !navigator.canShare({ files: [archivoExcel] })) {
+        archivoExcel = new File([excelBuffer], nombreArchivo, { type: 'application/octet-stream' });
+    }
 
-            XLSX.writeFile(libro, nombreArchivo);
-            const opcion = prompt(
-                `📥 Se descargó el archivo "${nombreArchivo}".\n\n` +
-                `Escribe:\n` +
-                `1 -> Para abrir WhatsApp\n` +
-                `2 -> Para abrir tu Correo Electrónico\n` +
-                `(Luego solo adjunta el archivo descargado)`
-            );
+    // 4. Si estamos en el celular y soporta compartir archivos, abrimos la bandeja nativa SOLO con el archivo
+    if (navigator.share && (!navigator.canShare || navigator.canShare({ files: [archivoExcel] }))) {
+        try {
+            await navigator.share({
+                files: [archivoExcel]
+            });
+            return; // Éxito: se compartió el archivo .xlsx directo
+        } catch (err) {
+            if (err.name === 'AbortError') return; // El usuario cerró el menú
+            console.warn("Fallo al adjuntar archivo directo:", err);
+        }
+    }
 
-            if (opcion === '1') {
-                window.open(`https://wa.me/?text=${encodeURIComponent(textoMensaje)}`, '_blank');
-            } else if (opcion === '2') {
-                const asunto = `Evaluaciones ${rubricaActivaObj.nombre} - ${sufijo.replace(/_/g, ' ')}`;
-                window.location.href = `mailto:?subject=${encodeURIComponent(asunto)}&body=${encodeURIComponent(textoMensaje + "\n\n(Adjuntar el archivo Excel descargado)")}`;
-            }
-        };
-    };
+    // 5. Si se abre desde PC (donde no existe menú nativo de compartir archivos a WhatsApp):
+    // Descargamos el Excel y armamos el reporte detallado en texto para WhatsApp
+    XLSX.writeFile(libro, nombreArchivo);
+
+    let resumenTexto = `📊 *REPORTE DE EVALUACIÓN - RAYDis*\n`;
+    resumenTexto += `📋 *Rúbrica:* ${rubricaActivaObj.nombre}\n`;
+    resumenTexto += `🎯 *Filtro:* ${sufijo.replace(/_/g, ' ')}\n\n`;
+
+    vals.forEach(v => {
+        const est = mapaEst[v.estudiante_id] || { nombre: 'Estudiante' };
+        resumenTexto += `👤 *${est.nombre}* (${v.grado} - ${v.grupo_nombre || 'Ind.'})\n`;
+        resumenTexto += `📌 ${v.actividad} ➡️ *Nota: ${Number(v.nota_final).toFixed(2)}*\n`;
+        if (v.observacion) resumenTexto += `💬 _${v.observacion}_\n`;
+        resumenTexto += `-------------------\n`;
+    });
+
+    const opcion = prompt(
+        `📥 Se descargó el archivo "${nombreArchivo}" en tu dispositivo.\n\n` +
+        `Nota: Los enlaces directos a WhatsApp Web no permiten adjuntar archivos automáticamente, pero podemos enviar el resumen completo de notas en texto.\n\n` +
+        `Escribe:\n` +
+        `1 -> Enviar resumen de notas por WhatsApp\n` +
+        `2 -> Abrir Correo Electrónico`
+    );
+
+    if (opcion === '1') {
+        window.open(`https://wa.me/?text=${encodeURIComponent(resumenTexto)}`, '_blank');
+    } else if (opcion === '2') {
+        const asunto = `Evaluaciones ${rubricaActivaObj.nombre} - ${sufijo.replace(/_/g, ' ')}`;
+        window.location.href = `mailto:?subject=${encodeURIComponent(asunto)}&body=${encodeURIComponent(resumenTexto)}`;
+    }
 }
 
 function eliminarValoracionesRubricaActiva() {
