@@ -2582,8 +2582,6 @@ function compartirValoracionesExcel() {
             if (navigator.canShare && navigator.canShare({ files: [archivoExcel] })) {
                 try {
                     await navigator.share({
-                        title: `Evaluaciones - ${rubricaActivaObj.nombre}`,
-                        text: textoMensaje,
                         files: [archivoExcel]
                     });
                     return;
