@@ -21,277 +21,9 @@
 // RÚBRICAS PREDISEÑADAS (SE CARGAN AUTOMÁTICAMENTE DESDE LA DESCARGA)
 // =========================================================================
 const RUBRICAS_PREDISEÑADAS = [
+//Rubrica Proyectos de Ciencias
     {
-        "nombre": "Rubrica_Laboratorio",
-        "es_predisenada": true,
-        "fecha_creacion": "2026-10-15",
-        "criterios": [
-            {
-                "criterio": "1. Dominio conceptual y rigor científico",
-                "peso": 50,
-                "niveles": [
-                    {
-                        "nivel": "No presenta",
-                        "desc": "No entrega ni evidencia conceptos",
-                        "val": 1
-                    },
-                    {
-                        "nivel": "Bajo",
-                        "desc": "Presenta confusiones conceptuales graves",
-                        "val": 2
-                    },
-                    {
-                        "nivel": "Básico",
-                        "desc": "Comprende y explica los conceptos básicos",
-                        "val": 3.3
-                    },
-                    {
-                        "nivel": "Alto",
-                        "desc": "Aplica los conceptos con precisión técnica",
-                        "val": 4.2
-                    },
-                    {
-                        "nivel": "Superior",
-                        "desc": "Domina y relaciona los conceptos de forma sobresaliente",
-                        "val": 5
-                    }
-                ]
-            },
-            {
-                "criterio": "2. Análisis experimental y conclusiones",
-                "peso": 50,
-                "niveles": [
-                    {
-                        "nivel": "No presenta",
-                        "desc": "No presenta análisis de datos",
-                        "val": 1
-                    },
-                    {
-                        "nivel": "Bajo",
-                        "desc": "Registra datos incompletos sin análisis",
-                        "val": 2.2
-                    },
-                    {
-                        "nivel": "Básico",
-                        "desc": "Analiza los resultados de forma descriptiva",
-                        "val": 3.5
-                    },
-                    {
-                        "nivel": "Alto",
-                        "desc": "Contrasta hipótesis y redacta conclusiones claras",
-                        "val": 4.4
-                    },
-                    {
-                        "nivel": "Superior",
-                        "desc": "Formula conclusiones críticas basadas en evidencia",
-                        "val": 5
-                    }
-                ]
-            }
-        ]
-    },
-    {
-        "nombre": "Exposición y Sustentación Oral (Prediseñada)",
-        "es_predisenada": true,
-        "fecha_creacion": "2026-03-01",
-        "criterios": [
-            {
-                "criterio": "1. Dominio del tema y rigor conceptual",
-                "peso": 40,
-                "niveles": [
-                    {
-                        "nivel": "No presenta",
-                        "desc": "No realiza la sustentación o no asiste a la actividad.",
-                        "val": 1
-                    },
-                    {
-                        "nivel": "Bajo",
-                        "desc": "Lee textualmente sin explicar y presenta errores conceptuales.",
-                        "val": 2.2
-                    },
-                    {
-                        "nivel": "Básico",
-                        "desc": "Explica las ideas básicas pero duda al responder preguntas.",
-                        "val": 3.3
-                    },
-                    {
-                        "nivel": "Alto",
-                        "desc": "Explica con claridad, precisión técnica y responde bien las preguntas.",
-                        "val": 4.3
-                    },
-                    {
-                        "nivel": "Superior",
-                        "desc": "Domina el tema con profundidad, argumenta con fluidez y conecta conceptos.",
-                        "val": 5
-                    }
-                ]
-            },
-            {
-                "criterio": "2. Expresión oral, postura y manejo del tiempo",
-                "peso": 30,
-                "niveles": [
-                    {
-                        "nivel": "No presenta",
-                        "desc": "No participa en la exposición.",
-                        "val": 1
-                    },
-                    {
-                        "nivel": "Bajo",
-                        "desc": "Tono de voz muy bajo, poca claridad y no respeta el tiempo asignado.",
-                        "val": 2.2
-                    },
-                    {
-                        "nivel": "Básico",
-                        "desc": "Se hace entender, aunque usa muletillas o se extiende del tiempo.",
-                        "val": 3.3
-                    },
-                    {
-                        "nivel": "Alto",
-                        "desc": "Buen tono de voz, contacto visual y uso adecuado del tiempo.",
-                        "val": 4.3
-                    },
-                    {
-                        "nivel": "Superior",
-                        "desc": "Comunicación cautivadora, excelente dicción y ajuste exacto al tiempo.",
-                        "val": 5
-                    }
-                ]
-            },
-            {
-                "criterio": "3. Calidad del material de apoyo y trabajo en equipo",
-                "peso": 30,
-                "niveles": [
-                    {
-                        "nivel": "No presenta",
-                        "desc": "No presenta material de apoyo.",
-                        "val": 1
-                    },
-                    {
-                        "nivel": "Bajo",
-                        "desc": "Material saturado de texto, desordenado o sin coordinación grupal.",
-                        "val": 2.2
-                    },
-                    {
-                        "nivel": "Básico",
-                        "desc": "Material comprensible pero con poco apoyo visual.",
-                        "val": 3.3
-                    },
-                    {
-                        "nivel": "Alto",
-                        "desc": "Material visualmente claro, organizado y articulado entre los integrantes.",
-                        "val": 4.3
-                    },
-                    {
-                        "nivel": "Superior",
-                        "desc": "Material creativo, sintético, de alto impacto pedagógico y excelente coordinación.",
-                        "val": 5
-                    }
-                ]
-            }
-        ]
-    },
-    {
-        "nombre": "Informe de Laboratorio / Proyecto (Prediseñada)",
-        "es_predisenada": true,
-        "fecha_creacion": "2026-03-01",
-        "criterios": [
-            {
-                "criterio": "1. Planteamiento, objetivos y marco conceptual",
-                "peso": 30,
-                "niveles": [
-                    {
-                        "nivel": "No presenta",
-                        "desc": "No entrega el informe o proyecto.",
-                        "val": 1
-                    },
-                    {
-                        "nivel": "Bajo",
-                        "desc": "Objetivos confusos y sin sustento teórico.",
-                        "val": 2.2
-                    },
-                    {
-                        "nivel": "Básico",
-                        "desc": "Presenta objetivos e introducción básica con poca articulación.",
-                        "val": 3.3
-                    },
-                    {
-                        "nivel": "Alto",
-                        "desc": "Objetivos claros y marco conceptual bien estructurado y pertinente.",
-                        "val": 4.3
-                    },
-                    {
-                        "nivel": "Superior",
-                        "desc": "Fundamentación científica rigurosa y objetivos perfectamente articulados.",
-                        "val": 5
-                    }
-                ]
-            },
-            {
-                "criterio": "2. Metodología, registro de datos y evidencias",
-                "peso": 35,
-                "niveles": [
-                    {
-                        "nivel": "No presenta",
-                        "desc": "No registra datos ni procedimiento.",
-                        "val": 1
-                    },
-                    {
-                        "nivel": "Bajo",
-                        "desc": "Datos incompletos, desordenados o sin unidades de medida.",
-                        "val": 2.2
-                    },
-                    {
-                        "nivel": "Básico",
-                        "desc": "Registra los datos principales aunque con fallas de organización.",
-                        "val": 3.3
-                    },
-                    {
-                        "nivel": "Alto",
-                        "desc": "Procedimiento claro y datos bien organizados en tablas o gráficas.",
-                        "val": 4.3
-                    },
-                    {
-                        "nivel": "Superior",
-                        "desc": "Registro sistemático, riguroso y con excelente representación gráfica.",
-                        "val": 5
-                    }
-                ]
-            },
-            {
-                "criterio": "3. Análisis de resultados y conclusiones",
-                "peso": 35,
-                "niveles": [
-                    {
-                        "nivel": "No presenta",
-                        "desc": "No incluye análisis ni conclusiones.",
-                        "val": 1
-                    },
-                    {
-                        "nivel": "Bajo",
-                        "desc": "Repite los datos sin analizarlos ni responder a los objetivos.",
-                        "val": 2.2
-                    },
-                    {
-                        "nivel": "Básico",
-                        "desc": "Realiza una descripción superficial de los resultados obtenidos.",
-                        "val": 3.3
-                    },
-                    {
-                        "nivel": "Alto",
-                        "desc": "Interpreta los resultados con base teórica y redacta conclusiones claras.",
-                        "val": 4.3
-                    },
-                    {
-                        "nivel": "Superior",
-                        "desc": "Análisis crítico profundo, contrasta hipótesis y propone mejoras pertinentes.",
-                        "val": 5
-                    }
-                ]
-            }
-        ]
-    },
-    {
-        "nombre": "Rubrica_ProyectoCiencias",
+        "nombre": "Rubrica_Proyectos de Ciencias",
         "es_predisenada": true,
         "fecha_creacion": "2026-10-15",
         "criterios": [
@@ -1313,19 +1045,38 @@ function sincronizarRubricasPredisenadas(mostrarAlerta = false) {
 
     store.getAll().onsuccess = (e) => {
         const existentes = e.target.result || [];
-        const nombresExistentes = new Set(existentes.map(r => normalizarTextoBusqueda(r.nombre)));
-        let nuevas = 0;
+        
+        // 1. Nombres de las rúbricas que están actualmente activas en el código app.js
+        const nombresEnCodigo = new Set(
+            RUBRICAS_PREDISEÑADAS.map(r => normalizarTextoBusqueda(r.nombre))
+        );
 
+        let eliminadas = 0;
+        const nombresQueQuedan = new Set();
+
+        // 2. Limpiar de la base de datos del dispositivo las prediseñadas que quitaste de app.js
+        existentes.forEach(r => {
+            const nomNorm = normalizarTextoBusqueda(r.nombre);
+            if (r.es_predisenada && !nombresEnCodigo.has(nomNorm)) {
+                store.delete(r.id);
+                eliminadas++;
+            } else {
+                nombresQueQuedan.add(nomNorm);
+            }
+        });
+
+        // 3. Agregar las prediseñadas que estén en app.js y aún no estén en el dispositivo
+        let nuevas = 0;
         RUBRICAS_PREDISEÑADAS.forEach(pred => {
             const nomNorm = normalizarTextoBusqueda(pred.nombre);
-            if (!nombresExistentes.has(nomNorm)) {
+            if (!nombresQueQuedan.has(nomNorm)) {
                 store.add({
                     nombre: pred.nombre,
                     es_predisenada: true,
                     fecha_creacion: pred.fecha_creacion || new Date().toISOString().split('T')[0],
                     criterios: pred.criterios
                 });
-                nombresExistentes.add(nomNorm);
+                nombresQueQuedan.add(nomNorm);
                 nuevas++;
             }
         });
@@ -1333,9 +1084,7 @@ function sincronizarRubricasPredisenadas(mostrarAlerta = false) {
         t.oncomplete = () => {
             cargarListaRubricas();
             if (mostrarAlerta) {
-                alert(nuevas > 0
-                    ? `✅ Se restauraron/agregaron ${nuevas} rúbrica(s) prediseñada(s).`
-                    : `ℹ️ Todas las rúbricas prediseñadas ya se encuentran activas en tu lista.`);
+                alert(`✅ Sincronización completada:\n• Rúbricas nuevas agregadas: ${nuevas}\n• Rúbricas antiguas retiradas: ${eliminadas}`);
             }
         };
     };
