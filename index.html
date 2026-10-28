@@ -691,6 +691,15 @@
         </div>
     </div>
 
-    <script src="app.js?v=9"></script>
+<script src="app.js?v=9"></script>
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('./sw.js')
+                    .then(() => console.log('✅ Modo Offline RAYDis activo'))
+                    .catch(err => console.error('Error SW:', err));
+            });
+        }
+    </script>
 </body>
 </html>
