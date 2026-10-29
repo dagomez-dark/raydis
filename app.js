@@ -183,6 +183,168 @@ const RUBRICAS_PREDISEÑADAS = [
                 ]
             }
         ]
+    },
+    {
+        "nombre": "Rubrica_ProyectosAgroindustrial",
+        "es_predisenada": true,
+        "fecha_creacion": "2026-10-29",
+        "criterios": [
+            {
+                "criterio": "1. Sustentación, Expresión Oral y Metodología",
+                "peso": 25,
+                "niveles": [
+                    {
+                        "nivel": "No presenta",
+                        "desc": "No participa ni aporta a la explicación del proceso agroindustrial.",
+                        "val": 1
+                    },
+                    {
+                        "nivel": "Bajo",
+                        "desc": "Sin contacto visual o voz inaudible. Lee mecánicamente. Desconoce el origen de la materia prima y los pasos de transformación.",
+                        "val": 1.8
+                    },
+                    {
+                        "nivel": "Básico",
+                        "desc": "Contacto visual intermitente y lenguaje coloquial. Depende de la lectura de fichas. Explica el proceso con dudas o confusiones básicas.",
+                        "val": 3.3
+                    },
+                    {
+                        "nivel": "Alto",
+                        "desc": "Buen contacto visual y uso de lenguaje adecuado. Explicación fluida del proceso de transformación e higiene con consultas ocasionales.",
+                        "val": 4
+                    },
+                    {
+                        "nivel": "Superior",
+                        "desc": "Contacto visual constante, fluidez y vocabulario técnico preciso. Discurso natural, seguro y sin lectura. Domina la metodología y la higiene.",
+                        "val": 5
+                    }
+                ]
+            },
+            {
+                "criterio": "2. Sabor y Calidad de la Muestra (Análisis Sensorial)",
+                "peso": 25,
+                "niveles": [
+                    {
+                        "nivel": "No presenta",
+                        "desc": "No presenta muestra, producto o alimento terminado para la evaluación.",
+                        "val": 1
+                    },
+                    {
+                        "nivel": "Bajo",
+                        "desc": "El producto no es apto para el consumo. Sabor desagradable, quemado, agrio o con evidente falta de higiene en su preparación.",
+                        "val": 1.8
+                    },
+                    {
+                        "nivel": "Básico",
+                        "desc": "Sabor y textura aceptables, pero el balance no es óptimo (muy dulce o simple). Presenta imperfecciones menores en su consistencia o frescura.",
+                        "val": 3.3
+                    },
+                    {
+                        "nivel": "Alto",
+                        "desc": "Buen sabor, aroma agradable y textura sólida. Muestra un producto de buena calidad culinaria o agroindustrial con mínimos fallos.",
+                        "val": 4
+                    },
+                    {
+                        "nivel": "Superior",
+                        "desc": "Sabor delicioso y balanceado. Textura, aroma y frescura excelentes. Calidad técnica o artesanal impecable y agradable al paladar del jurado.",
+                        "val": 5
+                    }
+                ]
+            },
+            {
+                "criterio": "3. Estructura de Costos y Viabilidad Económica",
+                "peso": 15,
+                "niveles": [
+                    {
+                        "nivel": "No presenta",
+                        "desc": "No responde preguntas ni presenta datos sobre el valor del dinero o gastos.",
+                        "val": 1
+                    },
+                    {
+                        "nivel": "Bajo",
+                        "desc": "Da respuestas incoherentes sobre el dinero. No identifica los gastos de los materiales ni sabe establecer un precio básico de venta.",
+                        "val": 1.8
+                    },
+                    {
+                        "nivel": "Básico",
+                        "desc": "Dudas prolongadas o parciales sobre finanzas. Relación de los costos del proyecto con el precio de venta de forma forzada o incompleta.",
+                        "val": 3.3
+                    },
+                    {
+                        "nivel": "Alto",
+                        "desc": "Responde correctamente la mayoría de preguntas financieras. Identifica la inversión básica de insumos y justifica su ganancia de forma lógica.",
+                        "val": 4
+                    },
+                    {
+                        "nivel": "Superior",
+                        "desc": "Respuestas inmediatas, seguras y exactas sobre economía. Domina la estructura de costos (insumos/mano de obra) y el precio según su nivel académico.",
+                        "val": 5
+                    }
+                ]
+            },
+            {
+                "criterio": "4. Presentación, Empaque y Etiqueta",
+                "peso": 15,
+                "niveles": [
+                    {
+                        "nivel": "No presenta",
+                        "desc": "No presenta empaque, envase ni contenedor para el producto.",
+                        "val": 1
+                    },
+                    {
+                        "nivel": "Bajo",
+                        "desc": "Empaque roto, sucio o inapropiado para alimentos. Total desinterés en el acabado. (En secundaria: No presenta la etiqueta obligatoria).",
+                        "val": 1.8
+                    },
+                    {
+                        "nivel": "Básico",
+                        "desc": "Envase poco original o frágil. Protege el producto de manera intermitente. (En secundaria: Etiqueta incompleta, borrosa o sin datos clave).",
+                        "val": 3.3
+                    },
+                    {
+                        "nivel": "Alto",
+                        "desc": "Contenedor funcional, limpio y de diseño sólido. Montaje de buena calidad. (En secundaria: Etiqueta clara con marca, logotipo e ingredientes).",
+                        "val": 4
+                    },
+                    {
+                        "nivel": "Superior",
+                        "desc": "Empaque original, robusto, higiénico y sostenible. Presentación impecable. (En secundaria: Etiqueta comercial perfecta, con fechas y alérgenos).",
+                        "val": 5
+                    }
+                ]
+            },
+            {
+                "criterio": "5. Stand, Imagen y Recursos Visuales",
+                "peso": 20,
+                "niveles": [
+                    {
+                        "nivel": "No presenta",
+                        "desc": "No presenta material de apoyo, folleto, tríptico ni cartelera.",
+                        "val": 1
+                    },
+                    {
+                        "nivel": "Bajo",
+                        "desc": "Stand desordenado, sucio e ilegible. Recursos impresos con errores ortográficos inaceptables. No aporta impacto visual a la feria.",
+                        "val": 1.8
+                    },
+                    {
+                        "nivel": "Básico",
+                        "desc": "Satura el stand con texto masivo. Escasez de imágenes del proceso. Trípticos o carteleras con orden visual confuso y varios errores ortográficos.",
+                        "val": 3.3
+                    },
+                    {
+                        "nivel": "Alto",
+                        "desc": "Espacio visual ordenado y limpio. Folletos, trípticos o carteleras estructuradas con texto explícito. Sin errores ortográficos graves.",
+                        "val": 4
+                    },
+                    {
+                        "nivel": "Superior",
+                        "desc": "Estructura visual y publicitaria impecable. Stand altamente llamativo, limpio y ordenado. Folletos/trípticos creativos y ortografía perfecta.",
+                        "val": 5
+                    }
+                ]
+            }
+        ]
     }
 ];
 // ==========================================
